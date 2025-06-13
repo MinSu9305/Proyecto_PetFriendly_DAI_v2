@@ -5,11 +5,7 @@
             <div class="flex justify-between items-center py-4">
                 <!-- Logo -->
                 <div class="flex items-center space-x-2">
-                    <div class="w-10 h-10 bg-black rounded-full flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                        </svg>
-                    </div>
+                    <img src="/images/sloganphoto.png" alt="Logo Pet Friendly" class="w-10 h-10 object-contain">
                     <span class="text-xl font-bold text-gray-900">Pet Friendly</span>
                 </div>
 
@@ -29,7 +25,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-yellow-50 to-orange-50 py-16">
+    <section class="bg-gradient-to-br from-white to-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div>
@@ -43,17 +39,8 @@
                     </p>
                 </div>
                 <div class="relative">
-                    <div class="absolute top-4 right-4 w-16 h-16 bg-pet-yellow rounded-full"></div>
-                    <div class="absolute top-12 left-8 w-8 h-8 bg-pet-yellow rounded-full"></div>
-                    <div class="absolute bottom-8 right-12 w-12 h-12 bg-pet-yellow transform rotate-45"></div>
-                    <div class="bg-gray-200 rounded-2xl p-8 relative z-10">
-                        <div class="text-center text-gray-500">
-                            <svg class="w-32 h-32 mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                            <p>Imagen de perro y gato</p>
-                        </div>
-                    </div>
+                    <img src="/images/dogcatportada.png" alt="Perro y Gato"
+                        class="w-full max-w-md mx-auto mb-4 object-contain">
                 </div>
             </div>
         </div>
@@ -66,66 +53,132 @@
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Proceso -->
-                <div class="bg-white border-2 border-gray-200 rounded-2xl p-6">
-                    <div class="bg-pet-yellow text-black font-bold py-2 px-4 rounded-full text-center mb-6">
-                        PROCESO
+                <div>
+                    <!-- Título arriba del cuadro -->
+                    <div class="text-center mb-4">
+                        <div
+                            class="bg-pet-yellow text-black font-bold py-2 px-4 rounded-full text-center mb-6 border border-black">
+                            PROCESO
+                        </div>
                     </div>
-                    <ol class="space-y-3 text-gray-700">
-                        <li>1. Elige tu compañero</li>
-                        <li>2. Explora nuestras mascotas disponibles y selecciónalo.</li>
-                        <li>3. Completa el formulario</li>
-                        <li>4. Bienvenido a casa PetFriendly.</li>
-                    </ol>
+
+                    <!-- Cuadro gris con los pasos -->
+                    <div class="bg-white border border-black rounded-2xl p-6">
+                        <ol class="space-y-3 text-gray-700">
+                            <li>1. Elige tu compañero</li>
+                            <li>2. Explora nuestras mascotas disponibles y selecciónalo.</li>
+                            <li>3. Completa el formulario</li>
+                            <li>4. Bienvenido a casa PetFriendly.</li>
+                        </ol>
+                    </div>
                 </div>
 
-                <!-- Responsabilidad -->
-                <div class="bg-white border-2 border-gray-200 rounded-2xl p-6">
-                    <div class="bg-pet-yellow text-black font-bold py-2 px-4 rounded-full text-center mb-6">
-                        RESPONSABILIDAD
+                <!-- RESPONSABILIDAD -->
+                <div>
+                    <div class="text-center mb-4">
+                        <div
+                            class="bg-pet-yellow text-black font-bold py-2 px-4 rounded-full text-center mb-6 border border-black">
+                            RESPONSABILIDAD
+                        </div>
                     </div>
-                    <p class="text-gray-700">
-                        Adoptar un PetFriendly es un compromiso de amor y responsabilidad. Significa cuidarlo, alimentarlo, respetarlo y llenarlo de cariño todos los días. Antes de dar este gran paso, asegúrate de estar listo para brindarle todo lo que necesita para ser feliz.
-                    </p>
+                    <div class="bg-white border border-black rounded-2xl p-6">
+                        <p class="text-gray-700">
+                            Adoptar un PetFriendly es un compromiso de amor y responsabilidad. Significa cuidarlo,
+                            alimentarlo, respetarlo y llenarlo de cariño todos los días. Antes de dar este gran paso,
+                            asegúrate de estar listo para brindarle todo lo que necesita para ser feliz.
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Prepara el espacio -->
-                <div class="bg-white border-2 border-gray-200 rounded-2xl p-6">
-                    <div class="bg-pet-yellow text-black font-bold py-2 px-4 rounded-full text-center mb-6">
-                        PREPARA EL ESPACIO
+                <!-- PREPARA EL ESPACIO -->
+                <div>
+                    <div class="text-center mb-4">
+                        <div
+                            class="bg-pet-yellow text-black font-bold py-2 px-4 rounded-full text-center mb-6 border border-black">
+                            PREPARA EL ESPACIO
+                        </div>
                     </div>
-                    <p class="text-gray-700">
-                        Antes de adoptar una mascota, es importante preparar tu hogar para garantizar su bienestar. Asegúrate de contar con un espacio seguro y cómodo, con camas, comederos y juguetes adecuados.
-                    </p>
+                    <div class="bg-white border border-black rounded-2xl p-6">
+                        <p class="text-gray-700">
+                            Antes de adoptar una mascota, es importante preparar tu hogar para garantizar su bienestar.
+                            Asegúrate de contar con un espacio seguro y cómodo, con camas, comederos y juguetes
+                            adecuados.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Mascotas Adoptadas Section -->
-    <section id="mascotas" class="py-16 bg-gray-50">
+    <section id="mascotas" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">NUESTRAS MASCOTAS ADOPTADAS</h2>
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-                @foreach([
-                    ['name' => 'Michi', 'bg' => 'bg-blue-200', 'emoji' => '🐱'],
-                    ['name' => 'Lucas', 'bg' => 'bg-pink-200', 'emoji' => '🐶'],
-                    ['name' => 'Dobby', 'bg' => 'bg-green-200', 'emoji' => '🐕'],
-                    ['name' => 'Michi', 'bg' => 'bg-gray-200', 'emoji' => '🐱'],
-                    ['name' => 'Michi', 'bg' => 'bg-yellow-200', 'emoji' => '🐶'],
-                    ['name' => 'Lucas', 'bg' => 'bg-green-300', 'emoji' => '🐱'],
-                    ['name' => 'Dobby', 'bg' => 'bg-gray-300', 'emoji' => '🐕'],
-                    ['name' => 'Lucas', 'bg' => 'bg-yellow-300', 'emoji' => '🐱']
-                ] as $pet)
+                <!-- Mascota 1 -->
                 <div class="text-center">
-                    <div class="{{$pet['bg']}} rounded-2xl p-4 mb-3">
-                        <div class="w-full h-32 bg-gray-300 rounded-lg flex items-center justify-center">
-                            <span class="text-4xl">{{$pet['emoji']}}</span>
-                        </div>
+                    <div>
+                        <img src="/images/gatito1.png" alt="" class="w-full h-full object-cover rounded-lg">
                     </div>
-                    <p class="font-semibold text-gray-900">{{$pet['name']}}</p>
+                    <p class="font-semibold text-2xl text-gray-900 mt-2">Milo</p>
                 </div>
-                @endforeach
+
+                <!-- Mascota 2 -->
+                <div class="text-center">
+                    <div>
+                        <img src="/images/perro3.png" alt="" class="w-full h-full object-cover rounded-lg">
+                    </div>
+                    <p class="font-semibold text-2xl text-gray-900 mt-2">Max</p>
+                </div>
+
+                <!-- Mascota 3 -->
+                <div class="text-center">
+                    <div>
+                        <img src="/images/gato2.png" alt="" class="w-full h-full object-cover rounded-lg">
+                    </div>
+                    <p class="font-semibold text-2xl text-gray-900 mt-2">Luna</p>
+                </div>
+
+                <!-- Mascota 4 -->
+                <div class="text-center">
+                    <div>
+                        <img src="/images/mascota4.png" alt="" class="w-full h-full object-cover rounded-lg">
+                    </div>
+                    <p class="font-semibold text-2xl text-gray-900 mt-2">Lucas</p>
+                </div>
+                <!-- Mascota 5 -->
+                <div class="text-center">
+                    <div>
+                        <img src="/images/perrito1.png" alt="" class="w-full h-full object-cover rounded-lg">
+                    </div>
+                    <p class="font-semibold text-2xl text-gray-900 mt-2">Rocky</p>
+                </div>
+
+                <!-- Mascota 6 -->
+                <div class="text-center">
+                    <div>
+                        <img src="/images/perrito2.png" alt="" class="w-full h-full object-cover rounded-lg">
+                    </div>
+                    <p class="font-semibold text-2xl text-gray-900 mt-2">Toby</p>
+                </div>
+
+                <!-- Mascota 7 -->
+                <div class="text-center">
+                    <div>
+                        <img src="/images/perrito3.png" alt="" class="w-full h-full object-cover rounded-lg">
+                    </div>
+                    <p class="font-semibold text-2xl text-gray-900 mt-2">Coco</p>
+                </div>
+
+                <!-- Mascota 8 -->
+                <div class="text-center">
+                    <div>
+                        <img src="/images/perro4.png" alt="" class="w-full h-full object-cover rounded-lg">
+                    </div>
+                    <p class="font-semibold text-2xl text-gray-900 mt-2">Duke</p>
+                </div>
+
             </div>
 
             <!-- Action Buttons -->
@@ -147,43 +200,68 @@
                 <!-- Logo y descripción -->
                 <div>
                     <div class="flex items-center space-x-2 mb-4">
-                        <div class="w-8 h-8 bg-black rounded-full"></div>
+                        <img src="/images/sloganphoto.png" alt="Logo Pet Friendly" class="w-10 h-10 object-contain">
                         <span class="text-lg font-bold">Pet Friendly</span>
                     </div>
                     <p class="text-gray-600 mb-4">
-                        PetFriendly es una organización que busca brindar un hogar a mascotas. ¡Adopta y cambia una vida!
+                        PetFriendly es una organización que busca brindar un hogar a mascotas. ¡Adopta y cambia una
+                        vida!
                     </p>
                     <!-- Social Media -->
                     <div class="flex space-x-3">
-                        <div class="w-10 h-10 bg-pet-yellow rounded-full flex items-center justify-center">
-                            <span class="text-black font-bold">f</span>
-                        </div>
-                        <div class="w-10 h-10 bg-pet-yellow rounded-full flex items-center justify-center">
-                            <span class="text-black font-bold">@</span>
-                        </div>
-                        <div class="w-10 h-10 bg-pet-yellow rounded-full flex items-center justify-center">
-                            <span class="text-black font-bold">▶</span>
-                        </div>
+                        <!-- Facebook -->
+                        <a href="https://www.facebook.com/profile.php?id=61576931204543" target="_blank"
+                            class="w-10 h-10 bg-pet-yellow rounded-full flex items-center justify-center hover:scale-110 transition">
+                            <i class="fa-brands fa-facebook-f text-black"></i>
+                        </a>
+
+                        <!-- Instagram -->
+                        <a href="https://www.instagram.com/petfriendly_rm/" target="_blank"
+                            class="w-10 h-10 bg-pet-yellow rounded-full flex items-center justify-center hover:scale-110 transition">
+                            <i class="fa-brands fa-instagram text-black"></i>
+                        </a>
+
+                        <!-- YouTube -->
+                        <a href="https://www.youtube.com/@petfriendly_rm" target="_blank"
+                            class="w-10 h-10 bg-pet-yellow rounded-full flex items-center justify-center hover:scale-110 transition">
+                            <i class="fa-brands fa-youtube text-black"></i>
+                        </a>
                     </div>
+
                 </div>
+
 
                 <!-- Links -->
                 <div>
-                    <ul class="space-y-2 text-gray-600">
+                    <ul class="space-y-2 text-gray-600 text-center">
                         <li><a href="#" class="hover:text-gray-900">Inicio</a></li>
-                        <li><a href="#" class="hover:text-gray-900">¿Qué debo saber?</a></li>
-                        <li><a href="#" class="hover:text-gray-900">Ver mascotas</a></li>
+                        <li><a href="#que-debo-saber" class="hover:text-gray-900">¿Qué debo saber?</a></li>
+                        <li><a href="#mascotas" class="hover:text-gray-900">Nuestras mascotas adoptadas</a></li>
                     </ul>
+
                 </div>
+
 
                 <!-- Contacto -->
                 <div>
                     <div class="space-y-2 text-gray-600">
-                        <p>📍 Avenida 001, Miraflores.</p>
-                        <p>Lima - Perú</p>
-                        <p>📞 +51 934 464 041</p>
-                        <p>✉️ petfriendly@gmail.com</p>
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot" style="color: #FFD43B;"></i>
+                            Avenida 001, Miraflores.
+                        </p>
+                        <p class="ml-6">Lima - Perú</p>
+
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-phone" style="color: #FFD43B;"></i>
+                            +51 934 464 041
+                        </p>
+
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-envelope" style="color: #FFD43B;"></i>
+                            petfriendly@gmail.com
+                        </p>
                     </div>
+
                 </div>
             </div>
             
