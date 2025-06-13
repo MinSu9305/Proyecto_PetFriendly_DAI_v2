@@ -16,6 +16,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
+        /* Configuración personalizada de colores */
         .bg-pet-yellow { background-color: #FCD34D; }
         .hover\:bg-pet-yellow:hover { background-color: #F59E0B; }
         .text-pet-yellow { color: #F59E0B; }
