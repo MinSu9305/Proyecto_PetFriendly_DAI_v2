@@ -92,4 +92,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(AdoptionRequest::class, 'approved_by');
     }
+
+    public function getFirstNameAttribute()
+{
+    return explode(' ', $this->name)[0];
+}
+
+public function getLastNameAttribute()
+{
+    $parts = explode(' ', $this->name);
+    return count($parts) > 1 ? implode(' ', array_slice($parts, 1)) : '';
+}
+
 }

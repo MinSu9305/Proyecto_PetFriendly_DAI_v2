@@ -10,7 +10,7 @@
     <!-- Barra de busqueda -->
     <div class="mb-6">
         <form method="GET" action="{{ route('admin.donations.index') }}" class="relative">
-            <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Buscar por nombre, email o monto..." 
+            <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Buscar por nombre o monto..." 
                    class="w-full max-w-md px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
             <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
             <button type="submit" class="hidden">Buscar</button>

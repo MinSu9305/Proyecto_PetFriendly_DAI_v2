@@ -18,7 +18,6 @@ class DonationController extends Controller
         
         $donations = Donation::when($search, function ($query, $search) {
                 return $query->where('donor_name', 'like', "%{$search}%")
-                           ->orWhere('donor_email', 'like', "%{$search}%")
                            ->orWhere('amount', 'like', "%{$search}%");
             })
             ->orderBy('created_at', 'desc')

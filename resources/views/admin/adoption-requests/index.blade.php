@@ -10,7 +10,7 @@
     <!-- Barra de Busqueda -->
     <div class="mb-6">
         <form method="GET" action="{{ route('admin.adoption-requests.index') }}" class="relative">
-            <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Buscar por nombre, email o mascota..." 
+            <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Buscar por nombre o mascota..." 
                    class="w-full max-w-md px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
             <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
             <button type="submit" class="hidden">Buscar</button>
@@ -47,8 +47,8 @@
             <tbody class="divide-y divide-gray-200">
                 @forelse($adoptionRequests as $request)
                 <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4 text-gray-900">{{ $request->user->name }}</td>
-                    <td class="px-6 py-4 text-gray-900">{{ $request->user->name }}</td>
+                    <td class="px-6 py-4 text-gray-900">{{ $request->user->first_name }}</td>
+                    <td class="px-6 py-4 text-gray-900">{{ $request->user->last_name }}</td>
                     <td class="px-6 py-4 text-gray-900">12345678</td>
                     <td class="px-6 py-4 text-gray-900">965781234</td>
                     <td class="px-6 py-4 text-gray-900">{{ $request->pet->name }}</td>

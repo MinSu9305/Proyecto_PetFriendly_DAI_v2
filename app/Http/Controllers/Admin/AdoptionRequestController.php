@@ -19,8 +19,7 @@ class AdoptionRequestController extends Controller
         $adoptionRequests = AdoptionRequest::with(['user', 'pet'])
             ->when($search, function ($query, $search) {
                 return $query->whereHas('user', function ($q) use ($search) {
-                    $q->where('name', 'like', "%{$search}%")
-                      ->orWhere('email', 'like', "%{$search}%");
+                    $q->where('name', 'like', "%{$search}%");
                 })->orWhereHas('pet', function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%");
                 });
