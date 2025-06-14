@@ -10,7 +10,7 @@
         <h1 class="text-3xl font-bold text-gray-900">Donación de</h1>
     </div>
 
-    <!-- Content -->
+    <!-- Contenido -->
     <div class="bg-white rounded-lg shadow-md p-6">
         <div class="grid grid-cols-3 gap-4 mb-6">
             <!-- Información del donante -->
@@ -53,7 +53,7 @@
             </div>
         </div>
 
-        <!-- Comentarios -->
+        <!-- Paginacion -->
         <div class="mb-6">
             <label class="block text-sm font-medium text-gray-700 mb-1">Comentarios</label>
             <textarea readonly rows="4" 

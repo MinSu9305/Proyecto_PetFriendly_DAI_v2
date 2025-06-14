@@ -7,7 +7,7 @@
         <h1 class="text-3xl font-bold text-gray-900">Donaciones</h1>
     </div>
 
-    <!-- Search Bar -->
+    <!-- Barra de busqueda -->
     <div class="mb-6">
         <form method="GET" action="{{ route('admin.donations.index') }}" class="relative">
             <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Buscar por nombre, email o monto..." 
@@ -17,7 +17,7 @@
         </form>
     </div>
 
-    <!-- Table -->
+    <!-- Tabla -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <table class="w-full">
             <thead class="bg-pet-yellow">
@@ -58,7 +58,7 @@
         </table>
     </div>
 
-    <!-- Pagination -->
+    <!-- Paginacion -->
     @if($donations->hasPages())
     <div class="mt-6">
         {{ $donations->links() }}
