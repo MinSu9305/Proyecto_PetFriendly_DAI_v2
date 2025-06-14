@@ -85,7 +85,7 @@ class DatabaseSeeder extends Seeder
         // Crear mascotas de prueba
         $mascotas = [
             [
-                'name' => 'Michi',
+                'name' => 'Leo',
                 'type' => 'cat',
                 'breed' => 'Mestizo',
                 'age' => 2,
@@ -121,7 +121,7 @@ class DatabaseSeeder extends Seeder
                 'is_sterilized' => false,
             ],
             [
-                'name' => 'Luna',
+                'name' => 'Lulu',
                 'type' => 'cat',
                 'breed' => 'Siamés',
                 'age' => 4,
