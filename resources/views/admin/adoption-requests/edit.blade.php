@@ -10,7 +10,7 @@
             <h1 class="text-3xl font-bold text-gray-900">Editar Solicitud de Adopción</h1>
         </div>
 
-        <!-- Form -->
+        <!-- Formulario -->
         <div class="bg-white rounded-lg shadow-md p-6">
             <form action="{{ route('admin.adoption-requests.update', $adoptionRequest) }}" method="POST" class="space-y-6">
                 @csrf
@@ -89,7 +89,7 @@
                     @enderror
                 </div>
 
-                <!-- Buttons -->
+                <!-- Botones -->
                 <div class="flex justify-end space-x-4 pt-4">
                     <a href="{{ route('admin.adoption-requests.index') }}"
                         class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg">

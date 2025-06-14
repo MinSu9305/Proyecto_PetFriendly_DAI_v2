@@ -7,7 +7,7 @@
         <h1 class="text-3xl font-bold text-gray-900">Solicitudes de Adopción</h1>
     </div>
 
-    <!-- Search Bar -->
+    <!-- Barra de Busqueda -->
     <div class="mb-6">
         <form method="GET" action="{{ route('admin.adoption-requests.index') }}" class="relative">
             <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Buscar por nombre, email o mascota..." 
@@ -17,7 +17,7 @@
         </form>
     </div>
 
-    <!-- Success Message -->
+    <!-- Mensaje -->
     @if (session('success'))
         <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6" role="alert">
             <p>{{ session('success') }}</p>
@@ -30,7 +30,7 @@
         </div>
     @endif
 
-    <!-- Table -->
+    <!-- Tabla -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <table class="w-full">
             <thead class="bg-pet-yellow">
@@ -84,7 +84,7 @@
         </table>
     </div>
 
-    <!-- Pagination -->
+    <!-- Paginacion -->
     @if($adoptionRequests->hasPages())
     <div class="mt-6">
         {{ $adoptionRequests->links() }}
