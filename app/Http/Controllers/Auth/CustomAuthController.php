@@ -14,15 +14,16 @@ use Carbon\Carbon;
 class CustomAuthController extends Controller
 {
     /**
-     * Handle login request
+     * Maneja el inicio de sesión
      */
     public function login(Request $request)
     {
+        // Valida que el email y contraseña estén presentes y en formato correcto
         $credentials = $request->validate([
             'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ]);
-
+        // Intenta autenticar con las credenciales. Si son válidas
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
@@ -31,7 +32,8 @@ class CustomAuthController extends Controller
             $user->last_login_at = now();
             $user->save();
 
-            // Redirigir según el rol
+            // Si el usuario es admin, lo redirige al panel de administración
+            // Si es un adoptante, lo redirige a su perfil y dashboard
             if (Auth::user()->role === 'admin') {
                 return redirect()->intended(route('admin.adoptantes'));
             }
@@ -45,10 +47,11 @@ class CustomAuthController extends Controller
     }
 
     /**
-     * Handle registration request
+     * Maneja el registro de usuarios
      */
     public function register(Request $request)
     {
+        // Los datos a ingresar son obligatorios y en fecha de nacimiento debe ser mayor de 20 años
         $request->validate([
             'name' => ['required', 'string', 'max:255', 'min:2'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -65,7 +68,7 @@ class CustomAuthController extends Controller
             'email' => $request->email,
             'birth_date' => $request->birth_date,
             'password' => Hash::make($request->password),
-            'role' => 'user', // Por defecto es usuario normal
+            'role' => 'user', // Crea un nuevo usuario con rol "user"
             'email_verified_at' => now(), // Marcar como verificado automáticamente
         ]);
 
@@ -73,7 +76,7 @@ class CustomAuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('user.profile');
+        return redirect()->route('user.profile'); //Redirige al perfil del usuario
     }
 }
 
