@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Pet Friendly') }}</title>
+    <title>PetFriendly - Panel de Administración</title>
+    <link rel="icon" href="/images/LogoPag.png" type="image/png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -21,18 +22,14 @@
         <!-- Sidebar -->
         <div class="w-64 bg-pet-yellow-dark">
             <!-- Logo -->
-            <div class="p-6">
+            <div class="p-6 border-b border-gray-200">
                 <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                        </svg>
-                    </div>
-                    <span class="text-xl font-bold text-black">PetFriendly</span>
+                    <img src="/images/sloganphoto.png" alt="Logo Pet Friendly" class="w-10 h-10 object-contain">
+                    <span class="text-xl font-bold text-gray-900">Pet Friendly</span>
                 </div>
             </div>
 
-            <!-- Navigation -->
+            <!-- Navegacion -->
             <nav class="p-4 space-y-2 bg-amber-100">
                 <a href="{{ route('user.profile') }}" 
                    class="flex items-center space-x-3 px-4 py-3 {{ request()->routeIs('user.profile') ? 'bg-white' : '' }} text-gray-700 hover:bg-white rounded-lg">
@@ -51,7 +48,7 @@
                 </a>
             </nav>
 
-            <!-- Logout Button -->
+            <!-- Boton de salida -->
             <div class="absolute bottom-6 left-4 right-4">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -63,13 +60,13 @@
             </div>
         </div>
 
-        <!-- Main Content -->
+        <!-- Contenido -->
         <div class="flex-1">
             @yield('content')
         </div>
     </div>
 
-    <!-- Flash Messages -->
+    <!-- Mensaje -->
     @if (session('success'))
         <div id="success-message" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg z-50">
             {{ session('success') }}
@@ -92,10 +89,8 @@
         </script>
     @endif
 
-    <!-- Modal -->
     <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 hidden">
         <div id="modal-content" class="bg-white rounded-t-xl rounded-b-xl max-w-md w-full mx-4">
-            <!-- Modal content will be inserted here -->
         </div>
     </div>
 
@@ -151,11 +146,11 @@
         }
         
         // Close modal when clicking outside
-        document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
+        //document.getElementById('modal').addEventListener('click', function(e) {
+        //    if (e.target === this) {
+        //        closeModal();
+        //    }
+        //});
     </script>
 </body>
 </html>

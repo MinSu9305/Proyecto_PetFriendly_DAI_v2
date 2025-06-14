@@ -30,7 +30,7 @@
                 </div>
             </div>
 
-            <!-- Navigation -->
+            <!-- Navegacion -->
             <nav class="p-4 space-y-2">
                 <a href="{{ route('admin.adoptantes') }}" 
                    class="flex items-center space-x-3 px-4 py-3 {{ request()->routeIs('admin.adoptantes') ? 'bg-gray-100' : '' }} text-gray-700 hover:bg-gray-100 rounded-lg">
@@ -54,7 +54,7 @@
                 </a>
             </nav>
 
-            <!-- Logout Button -->
+            <!-- Boton de salir -->
             <div class="absolute bottom-6 left-4 right-4">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -66,7 +66,7 @@
             </div>
         </div>
 
-        <!-- Main Content -->
+        <!-- Contenido -->
         <div class="flex-1">
             @yield('content')
         </div>
