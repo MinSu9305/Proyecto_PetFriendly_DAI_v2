@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\User; //Modelo user
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request; //maneja los datos enviados por formularios
+use Illuminate\Support\Facades\Auth;//autenticación de Laravel
+use Illuminate\Support\Facades\Hash;// encripta contraseñas
 use Illuminate\Validation\Rules;
-use Carbon\Carbon;
+use Carbon\Carbon; //para manejar fechas, verificacion de edad
 
 class CustomAuthController extends Controller
 {

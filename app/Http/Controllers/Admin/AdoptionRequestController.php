@@ -7,16 +7,15 @@ use App\Models\Pet;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+// Este controlador va a gestionar las solicitudes de adopción en el panel de administracion
 class AdoptionRequestController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
         $search = $request->get('search');
         
+        // Listado de solicitudes con opción de búsqueda 
         $adoptionRequests = AdoptionRequest::with(['user', 'pet'])
             ->when($search, function ($query, $search) {
                 return $query->whereHas('user', function ($q) use ($search) {
@@ -41,6 +40,7 @@ class AdoptionRequestController extends Controller
      */
     public function store(Request $request)
     {
+        // Guarda una nueva solicitud de adopción
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'pet_id' => 'required|exists:pets,id',
@@ -71,18 +71,14 @@ class AdoptionRequestController extends Controller
             ->with('success', 'Solicitud de adopción creada exitosamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+  // Muestra los detalles de una solicitud específica
     public function show(AdoptionRequest $adoptionRequest)
     {
         $adoptionRequest->load(['user', 'pet']);
         return view('admin.adoption-requests.show', compact('adoptionRequest'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+  // Muestra el formulario de edición
     public function edit(AdoptionRequest $adoptionRequest)
     {
         $adoptionRequest->load(['user', 'pet']);
@@ -92,9 +88,8 @@ class AdoptionRequestController extends Controller
         return view('admin.adoption-requests.edit', compact('adoptionRequest', 'users', 'pets'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+ // Actualiza una solicitud existente.
+
     public function update(Request $request, AdoptionRequest $adoptionRequest)
     {
         $validated = $request->validate([
@@ -138,9 +133,7 @@ class AdoptionRequestController extends Controller
             ->with('success', 'Solicitud de adopción actualizada exitosamente.');
     }
 
-    /**
-     * Process the adoption request (approve or reject).
-     */
+// Método para aprobar o rechazar una solicitud
     public function process(Request $request, AdoptionRequest $adoptionRequest)
     {
         $validated = $request->validate([
