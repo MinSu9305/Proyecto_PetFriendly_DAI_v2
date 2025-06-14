@@ -9,15 +9,16 @@
                     <span class="text-xl font-bold text-gray-900">Pet Friendly</span>
                 </div>
 
-                <!-- Navigation -->
+                <!-- Navegacion -->
                 <nav class="hidden md:flex space-x-8">
                     <a href="#" class="text-gray-700 hover:text-gray-900">Inicio</a>
                     <a href="#que-debo-saber" class="text-gray-700 hover:text-gray-900">¿Qué debo saber?</a>
                     <a href="#mascotas" class="text-gray-700 hover:text-gray-900">Ver mascotas</a>
                 </nav>
 
-                <!-- Auth Button -->
-                <button wire:click="showAuthModal('login')" class="bg-pet-yellow hover:bg-pet-yellow text-black font-semibold px-6 py-2 rounded-full transition duration-200">
+                <!-- Boton para acceder -->
+                <button wire:click="showAuthModal('login')"
+                    class="bg-pet-yellow hover:bg-pet-yellow text-black font-semibold px-6 py-2 rounded-full transition duration-200">
                     Acceder
                 </button>
             </div>
@@ -50,7 +51,7 @@
     <section id="que-debo-saber" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">¿QUÉ DEBO SABER?</h2>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Proceso -->
                 <div>
@@ -62,7 +63,6 @@
                         </div>
                     </div>
 
-                    <!-- Cuadro gris con los pasos -->
                     <div class="bg-white border border-black rounded-2xl p-6">
                         <ol class="space-y-3 text-gray-700">
                             <li>1. Elige tu compañero</li>
@@ -114,7 +114,7 @@
     <section id="mascotas" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-12">NUESTRAS MASCOTAS ADOPTADAS</h2>
-            
+
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
                 <!-- Mascota 1 -->
                 <div class="text-center">
@@ -181,12 +181,14 @@
 
             </div>
 
-            <!-- Action Buttons -->
+            <!-- Botones que tambien los van a redirigir a que inicie sesion o se registre -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <button wire:click="showAuthModal('login')" class="bg-pet-yellow hover:bg-pet-yellow text-black font-bold py-3 px-8 rounded-full transition duration-200">
+                <button wire:click="showAuthModal('login')"
+                    class="bg-pet-yellow hover:bg-pet-yellow text-black font-bold py-3 px-8 rounded-full transition duration-200">
                     ¡Quiero adoptar!
                 </button>
-                <button wire:click="showAuthModal('login')" class="bg-pet-yellow hover:bg-pet-yellow text-black font-bold py-3 px-8 rounded-full transition duration-200">
+                <button wire:click="showAuthModal('login')"
+                    class="bg-pet-yellow hover:bg-pet-yellow text-black font-bold py-3 px-8 rounded-full transition duration-200">
                     ¡Quiero ayudar! (Donar)
                 </button>
             </div>
@@ -207,7 +209,7 @@
                         PetFriendly es una organización que busca brindar un hogar a mascotas. ¡Adopta y cambia una
                         vida!
                     </p>
-                    <!-- Social Media -->
+                    <!-- Redes Sociales -->
                     <div class="flex space-x-3">
                         <!-- Facebook -->
                         <a href="https://www.facebook.com/profile.php?id=61576931204543" target="_blank"
@@ -231,7 +233,7 @@
                 </div>
 
 
-                <!-- Links -->
+                <!-- Links del footer-->
                 <div>
                     <ul class="space-y-2 text-gray-600 text-center">
                         <li><a href="#" class="hover:text-gray-900">Inicio</a></li>
@@ -264,140 +266,154 @@
 
                 </div>
             </div>
-            
+
             <div class="border-t border-gray-200 mt-8 pt-8 text-center text-gray-500">
                 <p>© Copyright PetFriendly 2025. Lima - Perú</p>
             </div>
         </div>
     </footer>
 
-    <!-- Auth Modal -->
-    @if($showModal)
-    <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" wire:click="closeModal">
-        <div class="bg-white rounded-2xl max-w-md w-full mx-4 overflow-hidden" wire:click.stop>
-            <!-- Modal Header -->
-            <div class="bg-pet-yellow px-6 py-4">
-                <div class="flex justify-between items-center">
-                    <!-- Logo -->
-                    <div class="flex items-center space-x-2">
-                        <div class="w-8 h-8 bg-black rounded-full flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
+    <!-- Ventana que va a estar encima de la pagina principal -->
+    @if ($showModal)
+        <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            wire:click="closeModal">
+            <div class="bg-white rounded-2xl max-w-md w-full mx-4 overflow-hidden" wire:click.stop>
+                <!-- Header -->
+                <div class="bg-pet-yellow px-6 py-4">
+                    <div class="flex justify-between items-center">
+                        <!-- Logo -->
+                        <div class="flex items-center space-x-2">
+                            <img src="/images/sloganphoto.png" alt="Logo Pet Friendly"
+                                class="w-10 h-10 object-contain">
+                            <span class="text-lg font-bold text-black">PetFriendly</span>
                         </div>
-                        <span class="text-lg font-bold text-black">PetFriendly</span>
-                    </div>
 
-                    <!-- Tab Buttons -->
-                    <div class="flex space-x-2">
-                        <button wire:click="switchTab('login')" 
+                        <!-- Tab Buttons -->
+                        <div class="flex space-x-2">
+                            <button wire:click="switchTab('login')"
                                 class="px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 
                                        {{ $currentTab === 'login' ? 'bg-black text-white' : 'bg-transparent text-black' }}">
-                            Iniciar sesión
-                        </button>
-                        <button wire:click="switchTab('register')" 
+                                Iniciar sesión
+                            </button>
+                            <button wire:click="switchTab('register')"
                                 class="px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-200 
                                        {{ $currentTab === 'register' ? 'bg-black text-white' : 'bg-transparent text-black' }}">
-                            Registrarse
-                        </button>
+                                Registrarse
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Modal Content -->
-            <div class="p-8">
-                @if($currentTab === 'login')
-                <!-- Login Form -->
-                <div>
-                    <div class="text-center mb-6">
-                        <div class="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                <!-- CONTENIDO DEL LOGIN -->
+                <div class="p-8">
+                    @if ($currentTab === 'login')
+                        <!-- FROMULARIO DE LOGIN -->
+                        <div>
+                            <div class="text-center mb-6">
+                                <img src="{{ asset('images/sloganphoto.png') }}" alt="Logo Pet Friendly"
+                                    class="w-20 h-20 object-contain mx-auto mb-4">
+                                <h2 class="text-2xl font-bold text-gray-900">INICIAR SESIÓN</h2>
+                            </div>
+
+
+                            <form wire:submit="login" class="space-y-4">
+                                <div>
+                                    <input type="email" wire:model="loginEmail" placeholder="Correo:"
+                                        class="w-full px-4 py-3 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                                    @error('loginEmail')
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <input type="password" wire:model="loginPassword" placeholder="Contraseña:"
+                                        class="w-full px-4 py-3 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                                    @error('loginPassword')
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <button type="submit"
+                                    class="w-full bg-pet-yellow hover:bg-pet-yellow-dark text-black font-bold py-3 rounded-lg transition duration-200">
+                                    INICIAR
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        <!-- FORMULARIO DE REGISTRO -->
+                        <div>
+                            <div class="text-center mb-6">
+                                <img src="{{ asset('images/sloganphoto.png') }}" alt="Logo Pet Friendly"
+                                    class="w-20 h-20 object-contain mx-auto mb-4">
+
+                                <h2 class="text-2xl font-bold text-gray-900">REGISTRARSE</h2>
+                            </div>
+
+                            <form wire:submit="register" class="space-y-4">
+                                <div>
+                                    <input type="text" wire:model="registerName" placeholder="Nombre:"
+                                        class="w-full px-4 py-3 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                                    @error('registerName')
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <input type="email" wire:model="registerEmail" placeholder="Correo:"
+                                        class="w-full px-4 py-3 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                                    @error('registerEmail')
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <input type="date" wire:model="registerBirthDate"
+                                        placeholder="Fecha de Nacimiento:"
+                                        class="w-full px-4 py-3 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                                    @error('registerBirthDate')
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <input type="password" wire:model="registerPassword" placeholder="Contraseña:"
+                                        class="w-full px-4 py-3 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                                    @error('registerPassword')
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <input type="password" wire:model="registerPasswordConfirmation"
+                                        placeholder="Confirmar contraseña:"
+                                        class="w-full px-4 py-3 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                                    @error('registerPasswordConfirmation')
+                                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <button type="submit"
+                                    class="w-full bg-pet-yellow hover:bg-pet-yellow-dark text-black font-bold py-3 rounded-lg transition duration-200">
+                                    REGISTRARSE
+                                </button>
+                            </form>
+                        </div>
+                    @endif
+
+                    <!-- Back Button -->
+                    <div class="text-center mt-6">
+                        <button wire:click="closeModal"
+                            class="text-gray-600 hover:text-gray-900 flex items-center justify-center mx-auto">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 19l-7-7 7-7"></path>
                             </svg>
-                        </div>
-                        <h2 class="text-2xl font-bold text-gray-900">INICIAR SESIÓN</h2>
-                    </div>
-
-                    <form wire:submit="login" class="space-y-4">
-                        <div>
-                            <input type="email" wire:model="loginEmail" placeholder="Correo:" 
-                                   class="w-full px-4 py-3 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                            @error('loginEmail') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
-                        
-                        <div>
-                            <input type="password" wire:model="loginPassword" placeholder="Contraseña:" 
-                                   class="w-full px-4 py-3 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                            @error('loginPassword') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
-
-                        <button type="submit" class="w-full bg-pet-yellow hover:bg-pet-yellow-dark text-black font-bold py-3 rounded-lg transition duration-200">
-                            INICIAR
+                            Volver
                         </button>
-                    </form>
-                </div>
-                @else
-                <!-- Register Form -->
-                <div>
-                    <div class="text-center mb-6">
-                        <div class="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
-                        </div>
-                        <h2 class="text-2xl font-bold text-gray-900">REGISTRARSE</h2>
                     </div>
-
-                    <form wire:submit="register" class="space-y-4">
-                        <div>
-                            <input type="text" wire:model="registerName" placeholder="Nombre:" 
-                                   class="w-full px-4 py-3 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                            @error('registerName') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <input type="email" wire:model="registerEmail" placeholder="Correo:" 
-                                   class="w-full px-4 py-3 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                            @error('registerEmail') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <input type="date" wire:model="registerBirthDate" placeholder="Fecha de Nacimiento:" 
-                                   class="w-full px-4 py-3 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                            @error('registerBirthDate') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <input type="password" wire:model="registerPassword" placeholder="Contraseña:" 
-                                   class="w-full px-4 py-3 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                            @error('registerPassword') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
-
-                        <div>
-                            <input type="password" wire:model="registerPasswordConfirmation" placeholder="Confirmar contraseña:" 
-                                   class="w-full px-4 py-3 bg-gray-100 rounded-lg border-0 focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                            @error('registerPasswordConfirmation') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                        </div>
-
-                        <button type="submit" class="w-full bg-pet-yellow hover:bg-pet-yellow-dark text-black font-bold py-3 rounded-lg transition duration-200">
-                            REGISTRARSE
-                        </button>
-                    </form>
-                </div>
-                @endif
-
-                <!-- Back Button -->
-                <div class="text-center mt-6">
-                    <button wire:click="closeModal" class="text-gray-600 hover:text-gray-900 flex items-center justify-center mx-auto">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                        </svg>
-                        Volver
-                    </button>
                 </div>
             </div>
         </div>
-    </div>
     @endif
 
     <!-- Success Message -->
