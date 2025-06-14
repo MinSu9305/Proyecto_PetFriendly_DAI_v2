@@ -11,9 +11,9 @@ use App\Http\Controllers\User\DonationController as UserDonationController;
 use App\Livewire\HomePage;
 use Illuminate\Support\Facades\Auth;
 
-// Página principal con Livewire
+// Página principal
 Route::get('/', HomePage::class)->name('home');
- // Definir una ruta dashboard que redirija a user.profile
+ // Ruta dashboard que redirija a user.profile
 Route::get('/dashboard', function () {
     return redirect()->route('user.profile');
 })->middleware(['auth'])->name('dashboard');
@@ -21,6 +21,7 @@ Route::get('/dashboard', function () {
 // Rutas de autenticación tradicionales
 Route::post('/login', [CustomAuthController::class, 'login'])->name('login');
 Route::post('/register', [CustomAuthController::class, 'register'])->name('register');
+// Cierra sesión y redirige al inicio
 Route::post('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();
@@ -56,8 +57,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 });
 
 
-// Rutas para usuarios normales (adoptantes)
-// Eliminar el middleware 'verified'
+// Rutas para usuarios (adoptantes)
 Route::middleware(['auth'])->name('user.')->group(function () {
 
     // Perfil
@@ -78,9 +78,6 @@ Route::middleware(['auth'])->name('user.')->group(function () {
     Route::get('/donations/{donation}/certificate', [UserDonationController::class, 'downloadCertificate'])->name('donations.certificate');
 });
 
-
-
-// Incluir rutas de autenticación de Laravel Breeze
 require __DIR__.'/auth.php';
 
 

@@ -3,9 +3,7 @@
 @section('content')
 <div class="p-8">
     <div class="flex items-center mb-4">
-        <a href="{{ route('user.pets.index') }}" class="mr-4 text-gray-600 hover:text-gray-900">
-            <i class="fas fa-arrow-left"></i> Volver
-        </a>
+        
         <h1 class="text-4xl font-bold">ADOPTA A TU PetFriendly</h1>
     </div>
     
