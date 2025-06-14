@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class PetController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Lista las mascotas con opción de búsqueda
      */
     public function index(Request $request)
     {
@@ -27,7 +27,7 @@ class PetController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para registrar una nueva mascota.
      */
     public function create()
     {
@@ -35,7 +35,7 @@ class PetController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guarda una nueva mascota en la base de datos con validación y subida opcional de imagen.
      */
     public function store(Request $request)
     {
@@ -47,7 +47,7 @@ class PetController extends Controller
             'size' => 'required|in:small,medium,large',
             'gender' => 'required|in:male,female',
             'description' => 'required|min:10',
-            'photo' => 'nullable|image|max:2048', // 2MB max
+            'photo' => 'nullable|image|max:2048', // pesar menos de 2MB
             'is_vaccinated' => 'boolean',
             'is_sterilized' => 'boolean',
         ], [
@@ -80,7 +80,7 @@ class PetController extends Controller
             'is_sterilized' => $request->has('is_sterilized'),
         ];
 
-        // Handle photo upload
+        // Si hay foto
         if ($request->hasFile('photo')) {
             $photoPath = $request->file('photo')->store('pets', 'public');
             $data['images'] = [$photoPath];
@@ -93,7 +93,7 @@ class PetController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Muestra los detalles individuales de una mascota específica.
      */
     public function show(Pet $pet)
     {
@@ -101,7 +101,7 @@ class PetController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar una mascota
      */
     public function edit(Pet $pet)
     {
@@ -109,7 +109,7 @@ class PetController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza los datos de una mascota. Similar al método store 
      */
     public function update(Request $request, Pet $pet)
     {

@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Donation;
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF; //Librería DomPDF usada para generar archivos PDF desde vistas Blade.
 
+//Este controlador va a gestionar las donaciones realizadas y además generar certificados en PDF
 class DonationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra la lista de donaciones, con opción de búsqueda. / (Nombre del donante, Correo, Monto)
      */
     public function index(Request $request)
     {
@@ -27,7 +28,7 @@ class DonationController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Muestra los detalles de una sola donación.
      */
     public function show(Donation $donation)
     {
@@ -35,7 +36,7 @@ class DonationController extends Controller
     }
 
     /**
-     * Generate a PDF certificate for the donation.
+     *  Genera un certificado de donación en PDF con los datos de la donación.
      */
     public function generateCertificate(Donation $donation)
     {
