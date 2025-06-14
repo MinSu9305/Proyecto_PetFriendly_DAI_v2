@@ -8,7 +8,7 @@ use App\Models\AdoptionRequest;
 use App\Models\Donation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+// Este es el controlador central del panel de administración
 class DashboardController extends Controller
 {
     public function index()
@@ -17,7 +17,7 @@ class DashboardController extends Controller
         if (!Auth::check() || Auth::user()->role !== 'admin') {
             return redirect()->route('home')->with('error', 'No tienes permisos para acceder al dashboard.');
         }
-
+        //Muestra el panel principal del admin
         return view('admin.dashboard');
     }
 
@@ -25,7 +25,7 @@ class DashboardController extends Controller
     public function adoptantes(Request $request)
     {
         $search = $request->get('search');
-
+        // Lista los usuarios con rol "user" 
         $adoptantes = User::where('role', 'user')
             ->when($search, function ($query, $search) {
                 return $query->where('name', 'like', "%{$search}%")
@@ -33,19 +33,20 @@ class DashboardController extends Controller
             })
             ->orderBy('created_at', 'desc')
             ->paginate(10);
-
+        // Devuelve la vista admin.adoptantes
         return view('admin.adoptantes', compact('adoptantes', 'search'));
     }
 
     public function mascotas()
     {
+        // Lista las mascotas con adopciones aprobadas
         $mascotas = Pet::with('approvedAdoption.user')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
         return view('admin.mascotas', compact('mascotas'));
     }
-
+//Obtiene todas las solicitudes de adopción
     public function solicitudes()
     {
         $solicitudes = AdoptionRequest::with(['user', 'pet'])
@@ -54,14 +55,14 @@ class DashboardController extends Controller
 
         return view('admin.adoption-requests', compact('solicitudes'));
     }
-
+//Muestra las donaciones
     public function donaciones()
     {
         $donations = Donation::with('user')->orderBy('created_at', 'desc')->paginate(10);
 
         return view('admin.donations.index', compact('donations'));
     }
-
+//datos de un adoptante en detalle
     public function viewAdoptante(User $user)
     {
         $adoptionRequests = $user->adoptionRequests()->with('pet')->get();
@@ -73,9 +74,9 @@ class DashboardController extends Controller
             'donations' => $donations,
         ]);
     }
-
     public function deleteAdoptante(User $user)
     {
+        //Elimina un adoptante del sistema, con validación para no eliminar admins
         if ($user->role === 'admin') {
             return response()->json(['error' => 'No se puede eliminar un administrador'], 403);
         }

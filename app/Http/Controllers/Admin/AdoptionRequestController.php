@@ -31,13 +31,6 @@ class AdoptionRequestController extends Controller
         return view('admin.adoption-requests.index', compact('adoptionRequests', 'search'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         // Guarda una nueva solicitud de adopción
