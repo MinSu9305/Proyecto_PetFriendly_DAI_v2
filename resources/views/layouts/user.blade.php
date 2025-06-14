@@ -19,46 +19,46 @@
 </head>
 <body class="font-sans antialiased">
     <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        <div class="w-64 bg-pet-yellow-dark">
-            <!-- Logo -->
-            <div class="p-6 border-b border-gray-200">
-                <div class="flex items-center space-x-3">
-                    <img src="/images/sloganphoto.png" alt="Logo Pet Friendly" class="w-10 h-10 object-contain">
-                    <span class="text-xl font-bold text-gray-900">Pet Friendly</span>
-                </div>
-            </div>
-
-            <!-- Navegacion -->
-            <nav class="p-4 space-y-2 bg-amber-100">
-                <a href="{{ route('user.profile') }}" 
-                   class="flex items-center space-x-3 px-4 py-3 {{ request()->routeIs('user.profile') ? 'bg-white' : '' }} text-gray-700 hover:bg-white rounded-lg">
-                    <i class="fas fa-user"></i>
-                    <span>Perfil</span>
-                </a>
-                <a href="{{ route('user.pets.index') }}" 
-                   class="flex items-center space-x-3 px-4 py-3 {{ request()->routeIs('user.pets.*') ? 'bg-white' : '' }} text-gray-700 hover:bg-white rounded-lg">
-                    <i class="fas fa-paw"></i>
-                    <span>Ver Mascotas</span>
-                </a>
-                <a href="{{ route('user.donations.index') }}" 
-                   class="flex items-center space-x-3 px-4 py-3 {{ request()->routeIs('user.donations.*') ? 'bg-white' : '' }} text-gray-700 hover:bg-white rounded-lg">
-                    <i class="fas fa-dollar-sign"></i>
-                    <span>Donaciones</span>
-                </a>
-            </nav>
-
-            <!-- Boton de salida -->
-            <div class="absolute bottom-6 left-4 right-4">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-white rounded-lg w-full">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Salir</span>
-                    </button>
-                </form>
+    <!-- Sidebar -->
+    <div class="w-64 bg-amber-100 relative flex flex-col">
+        <!-- Logo -->
+        <div class="p-6 bg-pet-yellow-dark border-b border-gray-200">
+            <div class="flex items-center space-x-3">
+                <img src="/images/sloganphoto.png" alt="Logo Pet Friendly" class="w-10 h-10 object-contain">
+                <span class="text-xl font-bold text-gray-900">Pet Friendly</span>
             </div>
         </div>
+
+        <!-- Navegación -->
+        <nav class="flex-1 p-4 space-y-2">
+            <a href="{{ route('user.profile') }}" 
+               class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-800 hover:bg-yellow-300 {{ request()->routeIs('user.profile') ? 'bg-yellow-300' : '' }}">
+                <i class="fas fa-user"></i>
+                <span>Perfil</span>
+            </a>
+            <a href="{{ route('user.pets.index') }}" 
+               class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-800 hover:bg-yellow-300 {{ request()->routeIs('user.pets.*') ? 'bg-yellow-300' : '' }}">
+                <i class="fas fa-home"></i>
+                <span>Ver Mascotas</span>
+            </a>
+            <a href="{{ route('user.donations.index') }}" 
+               class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-800 hover:bg-yellow-300 {{ request()->routeIs('user.donations.*') ? 'bg-yellow-300' : '' }}">
+                <i class="fas fa-dollar-sign"></i>
+                <span>Donaciones</span>
+            </a>
+        </nav>
+
+        <!-- Botón de salida -->
+        <div class="p-4">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="flex items-center space-x-3 px-4 py-3 text-gray-800 hover:bg-yellow-300 rounded-lg w-full">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Salir</span>
+                </button>
+            </form>
+        </div>
+    </div>
 
         <!-- Contenido -->
         <div class="flex-1">
@@ -143,8 +143,7 @@
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
-        }
-        
+            
         // Close modal when clicking outside
         //document.getElementById('modal').addEventListener('click', function(e) {
         //    if (e.target === this) {

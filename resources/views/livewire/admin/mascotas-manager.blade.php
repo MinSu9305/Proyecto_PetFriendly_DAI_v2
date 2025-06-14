@@ -8,7 +8,7 @@
         </button>
     </div>
 
-    <!-- Search Bar -->
+    <!-- Barra de busqueda -->
     <div class="mb-6">
         <div class="relative">
             <input type="text" wire:model.live="search" placeholder="Buscar..." 
@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <!-- Table -->
+    <!-- Tabla -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
         <table class="w-full">
             <thead class="bg-pet-yellow">
@@ -62,14 +62,14 @@
         </table>
     </div>
 
-    <!-- Pagination -->
+    <!-- Paginacion -->
     @if($pets->hasPages())
     <div class="mt-6">
         {{ $pets->links() }}
     </div>
     @endif
 
-    <!-- Create/Edit Modal -->
+    <!-- Crea-Edita -->
     @if($showModal)
     <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" wire:click="closeModal">
         <div class="bg-white rounded-lg max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto" wire:click.stop>
@@ -85,7 +85,7 @@
                 </div>
             </div>
 
-            <!-- Modal Content -->
+            <!-- Modal Contenido -->
             <form wire:submit="save" class="p-6 space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Nombre -->
@@ -209,7 +209,7 @@
                     </div>
                 </div>
 
-                <!-- Buttons -->
+                <!-- Botones -->
                 <div class="flex justify-end space-x-4 pt-4">
                     <button type="button" wire:click="closeModal" 
                             class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg">
@@ -239,7 +239,7 @@
                 </div>
             </div>
 
-            <!-- Modal Content -->
+            <!-- Modal Contenido -->
             <div class="p-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <!-- Información -->
@@ -295,7 +295,7 @@
     </div>
     @endif
 
-    <!-- Success Message -->
+    <!-- Mensaje -->
     @if (session()->has('message'))
         <div class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg z-50">
             {{ session('message') }}
