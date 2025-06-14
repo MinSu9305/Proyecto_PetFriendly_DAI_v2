@@ -6,11 +6,11 @@ use App\Models\Donation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+// Este controlador permite a los usuarios autenticados ver, registrar y descargar certificados de sus donaciones
 class DonationController extends Controller
 {
     /**
-     * Display a listing of the user's donations.
+     * Muestra un listado paginado de las donaciones hechas por el usuario
      */
     public function index()
     {
@@ -22,7 +22,7 @@ class DonationController extends Controller
     }
 
     /**
-     * Show the form for creating a new donation.
+     * Muestra el formulario para hacer una nueva donación
      */
     public function create()
     {
@@ -30,7 +30,7 @@ class DonationController extends Controller
     }
 
     /**
-     * Store a newly created donation.
+     * Guarda una nueva donación en la base de datos:
      */
     public function store(Request $request)
     {
@@ -55,7 +55,7 @@ class DonationController extends Controller
     }
 
     /**
-     * Generate a PDF certificate for the donation.
+     * Genera un PDF descargable de certificado
      */
     public function downloadCertificate(Donation $donation)
     {

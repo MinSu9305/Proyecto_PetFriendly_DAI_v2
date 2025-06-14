@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-
+// V a gestionar correctamente el perfil del usuario autenticado
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile.
+     * Muestra el perfil del usuario
      */
     public function index()
     {
@@ -35,7 +35,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile information.
+     * Actualiza información básica del perfil
      */
     public function update(Request $request)
     {
@@ -47,7 +47,6 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'birth_date' => ['required', 'date'],
         ]);
         
         $user->name = $validated['name'];
@@ -59,7 +58,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update the user's profile photo.
+     * Actualiza la foto de perfil:
      */
     public function updatePhoto(Request $request)
     {
@@ -72,12 +71,14 @@ class ProfileController extends Controller
             $user = EloquentUser::find($user->id);
         }
         
-        // Delete old photo if exists
+        // Borra imagen anterior si existe
+
+
         if ($user->profile_photo_path) {
             Storage::disk('public')->delete($user->profile_photo_path);
         }
         
-        // Store new photo
+        // Guarda nueva imagen
         $photoPath = $request->file('photo')->store('profile-photos', 'public');
         $user->profile_photo_path = $photoPath;
         $user->save();

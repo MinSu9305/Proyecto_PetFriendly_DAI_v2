@@ -7,11 +7,11 @@ use App\Models\AdoptionRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+// Este controlador permite a los usuarios ver mascotas disponibles para adopción, solicitar adopciones y gestionar sus solicitudes.
 class PetController extends Controller
 {
     /**
-     * Display a listing of available pets.
+     * Muestra el listado de mascotas disponibles para adopción
      */
     public function index(Request $request)
     {
@@ -32,7 +32,7 @@ class PetController extends Controller
     }
 
     /**
-     * Display the specified pet.
+     * Muestra los detalles de una mascota específica
      */
     public function show(Pet $pet)
     {
@@ -40,7 +40,7 @@ class PetController extends Controller
     }
 
     /**
-     * Show the form for creating a new adoption request.
+     * Muestra el formulario para solicitar la adopción
      */
     public function adoptionForm(Pet $pet)
     {
@@ -49,7 +49,7 @@ class PetController extends Controller
     }
 
     /**
-     * Store a newly created adoption request.
+     * Guarda una nueva solicitud de adopción.
      */
     public function submitAdoption(Request $request, Pet $pet)
     {
@@ -59,7 +59,7 @@ class PetController extends Controller
             'message' => 'required|string|min:10',
         ]);
         
-        // Check if user already has a pending request for this pet
+        // Evita solicitudes duplicadas pendientes para la misma mascota por el mismo usuario:
         $existingRequest = AdoptionRequest::where('user_id', Auth::id())
             ->where('pet_id', $pet->id)
             ->where('status', 'pending')
@@ -69,7 +69,7 @@ class PetController extends Controller
             return redirect()->back()->with('error', 'Ya tienes una solicitud pendiente para esta mascota.');
         }
         
-        // Create adoption request
+        // Crea la solicitud
         AdoptionRequest::create([
             'user_id' => Auth::id(),
             'pet_id' => $pet->id,
@@ -78,13 +78,13 @@ class PetController extends Controller
             'admin_notes' => null,
         ]);
         
-        // Update user information if needed
+        // Actualiza el usuario con los datos de adopción
         $user = User::find(Auth::id());
         $user->dni = $validated['dni'];
         $user->phone = $validated['phone'];
         $user->save();
         
-        // Update pet status to pending
+        // Cambia el estado de la mascota a pending
         $pet->status = 'pending';
         $pet->save();
         
