@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Dashboard - Pet Friendly</title>
+    <title>PetFriendly - Panel de Administración</title>
+    <link rel="icon" href="/images/LogoPag.png" type="image/png">
+
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -36,17 +38,12 @@
             <!-- Logo -->
             <div class="p-6 border-b border-gray-200">
                 <div class="flex items-center space-x-3">
-                    <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                            <path
-                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                    </div>
-                    <span class="text-xl font-bold text-gray-900">PetFriendly</span>
+                    <img src="/images/sloganphoto.png" alt="Logo Pet Friendly" class="w-10 h-10 object-contain">
+                    <span class="text-xl font-bold text-gray-900">Pet Friendly</span>
                 </div>
             </div>
 
-            <!-- Navigation -->
+            <!-- Navegacion -->
             <nav class="p-4 space-y-2">
                 <!-- Adoptantes -->
                 <a href="{{ route('admin.adoptantes') }}"
@@ -78,7 +75,7 @@
 
             </nav>
 
-            <!-- Logout Button -->
+            <!-- Boton para salir -->
             <div class="absolute bottom-6 left-4 right-4">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
@@ -91,14 +88,14 @@
             </div>
         </div>
 
-        <!-- Main Content -->
+        <!-- Contenido principal -->
         <div class="flex-1 p-8">
             <!-- Header -->
             <div class="mb-8">
                 <h1 class="text-3xl font-bold text-gray-900">Lista de Adoptantes</h1>
             </div>
 
-            <!-- Search Bar -->
+            <!-- Barra de Busqueda -->
             <div class="mb-6">
                 <form method="GET" action="{{ route('admin.adoptantes') }}" class="flex gap-4">
                     <input type="text" name="search" value="{{ $search }}"
@@ -117,7 +114,7 @@
                 </form>
             </div>
 
-            <!-- Table -->
+            <!-- Tabla -->
             <div class="bg-white rounded-lg shadow overflow-hidden">
                 <table class="w-full">
                     <thead class="bg-pet-yellow">
@@ -160,7 +157,7 @@
                 </table>
             </div>
 
-            <!-- Pagination -->
+            <!-- Paginacion -->
             @if ($adoptantes->hasPages())
                 <div class="mt-6 flex justify-center">
                     {{ $adoptantes->links() }}
@@ -180,7 +177,6 @@
                 </button>
             </div>
             <div id="modalContent">
-                <!-- Content will be loaded here -->
             </div>
         </div>
     </div>
@@ -271,12 +267,12 @@
             document.getElementById('viewModal').style.display = 'none';
         }
 
-        // Close modal when clicking outside
-        document.getElementById('viewModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
+        // Cerrar modal al hacer clic fuera
+        //document.getElementById('viewModal').addEventListener('click', function(e) {
+        //    if (e.target === this) {
+        //        closeModal();
+        //    }
+        //});
     </script>
 </body>
 

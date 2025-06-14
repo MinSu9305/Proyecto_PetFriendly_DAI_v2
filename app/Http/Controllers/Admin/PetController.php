@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -14,14 +15,22 @@ class PetController extends Controller
     public function index(Request $request)
     {
         $search = $request->get('search');
-        
-        $pets = Pet::when($search, function ($query, $search) {
-            $query->where('name', 'like', "%{$search}%")
-                  ->orWhere('breed', 'like', "%{$search}%")
-                  ->orWhere('type', 'like', "%{$search}%");
+        $translated = [
+            'perro' => 'dog',
+            'gato' => 'cat',
+            'otro' => 'other',
+        ];
+
+        $searchTranslated = strtolower($search);
+        $typeSearch = $translated[$searchTranslated] ?? $search;
+
+        $pets = Pet::when($search, function ($query) use ($typeSearch) {
+            $query->where('name', 'like', "%{$typeSearch}%")
+                ->orWhere('breed', 'like', "%{$typeSearch}%")
+                ->orWhere('type', 'like', "%{$typeSearch}%");
         })
-        ->orderBy('created_at', 'desc')
-        ->paginate(10);
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         return view('admin.pet.index', compact('pets', 'search'));
     }
@@ -41,7 +50,7 @@ class PetController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|min:2|max:255',
-            'type' => 'required|in:dog,cat,other',
+            'type' => 'required|in:dog,cat',
             'breed' => 'required|min:2|max:255',
             'age' => 'required|integer|min:0|max:20',
             'size' => 'required|in:small,medium,large',
@@ -115,7 +124,7 @@ class PetController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|min:2|max:255',
-            'type' => 'required|in:dog,cat,other',
+            'type' => 'required|in:dog,cat',
             'breed' => 'required|min:2|max:255',
             'age' => 'required|integer|min:0|max:20',
             'size' => 'required|in:small,medium,large',
@@ -158,11 +167,11 @@ class PetController extends Controller
 
         // 
         if ($request->hasFile('photo')) {
-            
+
             if ($pet->images && count($pet->images) > 0) {
                 Storage::disk('public')->delete($pet->images[0]);
             }
-            
+
             $photoPath = $request->file('photo')->store('pets', 'public');
             $data['images'] = [$photoPath];
         }
