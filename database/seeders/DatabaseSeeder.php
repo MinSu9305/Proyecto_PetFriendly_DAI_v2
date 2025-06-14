@@ -141,9 +141,9 @@ class DatabaseSeeder extends Seeder
         // Crear solicitudes de adopción
         AdoptionRequest::create([
             'user_id' => 2, // María Angélica
-            'pet_id' => 1, // Michi
+            'pet_id' => 1, // Leo
             'status' => 'pending',
-            'message' => 'Me encantaría adoptar a Michi, tengo experiencia con gatos.',
+            'message' => 'Me encantaría adoptar a Leo, tengo experiencia con gatos.',
         ]);
 
         AdoptionRequest::create([
