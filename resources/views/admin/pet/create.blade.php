@@ -10,7 +10,7 @@
         <h1 class="text-3xl font-bold text-gray-900">Agregar Mascota</h1>
     </div>
 
-    <!-- Form -->
+    <!-- Formulario -->
     <div class="bg-white rounded-lg shadow-md p-6">
         <form action="{{ route('admin.pets.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
@@ -117,7 +117,7 @@
                 </div>
             </div>
 
-            <!-- Buttons -->
+            <!-- Botones -->
             <div class="flex justify-end space-x-4 pt-4">
                 <a href="{{ route('admin.pets.index') }}" 
                    class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg">
