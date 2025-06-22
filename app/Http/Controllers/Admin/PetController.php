@@ -30,7 +30,7 @@ class PetController extends Controller
                 ->orWhere('type', 'like', "%{$typeSearch}%");
         })
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(10); // Paginacion de 10 por pagina esto le va a permitir al usuario ver 
 
         return view('admin.pet.index', compact('pets', 'search'));
     }
