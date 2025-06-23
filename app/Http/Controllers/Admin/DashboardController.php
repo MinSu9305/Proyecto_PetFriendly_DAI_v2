@@ -32,7 +32,7 @@ class DashboardController extends Controller
                     ->orWhere('email', 'like', "%{$search}%");
             })
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(5);
         // Devuelve la vista admin.adoptantes
         return view('admin.adoptantes', compact('adoptantes', 'search'));
     }

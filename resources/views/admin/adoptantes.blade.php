@@ -131,18 +131,18 @@
                                 <td class="px-6 py-4 text-gray-900">{{ $adoptante->email }}</td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex justify-center space-x-2">
-                                        <button onclick="viewAdoptante({{ $adoptante->id }})"
-                                            class="p-2 text-blue-600 hover:bg-blue-100 rounded-lg" title="Ver detalles">
+                                        <button onclick="viewAdoptante({{ $adoptante->id }})" 
+                                                class="p-2 text-gray-700 hover:text-black hover:bg-gray-200 rounded-lg transition-colors" title="Ver detalles">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button onclick="editAdoptante({{ $adoptante->id }})"
+                                        <!--<button onclick="editAdoptante({{ $adoptante->id }})"
                                             class="p-2 text-green-600 hover:bg-green-100 rounded-lg" title="Editar">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button onclick="deleteAdoptante({{ $adoptante->id }})"
                                             class="p-2 text-red-600 hover:bg-red-100 rounded-lg" title="Eliminar">
                                             <i class="fas fa-trash"></i>
-                                        </button>
+                                        </button>-->
                                     </div>
                                 </td>
                             </tr>
@@ -157,115 +157,231 @@
                 </table>
             </div>
 
-            <!-- Paginacion -->
-            @if ($adoptantes->hasPages())
-                <div class="mt-6 flex justify-center">
-                    {{ $adoptantes->links() }}
-                </div>
+<!-- Paginacion -->
+@if ($adoptantes->hasPages())
+    <div class="mt-6 flex justify-center items-center">
+        <div class="flex items-center gap-2 bg-white rounded-lg shadow-sm p-2">
+            {{-- Previous Page Link --}}
+            @if ($adoptantes->onFirstPage())
+                <span class="px-3 py-1 rounded-md text-gray-400 cursor-not-allowed">
+                    <i class="fas fa-chevron-left"></i>
+                </span>
+            @else
+                <a href="{{ $adoptantes->previousPageUrl() }}" 
+                   class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            @endif
+
+            {{-- Pagination Elements --}}
+            @foreach ($adoptantes->getUrlRange(1, $adoptantes->lastPage()) as $page => $url)
+                @if ($page == $adoptantes->currentPage())
+                    <span class="px-3 py-1 rounded-md bg-pet-yellow text-black font-medium">
+                        {{ $page }}
+                    </span>
+                @else
+                    <a href="{{ $url }}" 
+                       class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
+                        {{ $page }}
+                    </a>
+                @endif
+            @endforeach
+
+            {{-- Next Page Link --}}
+            @if ($adoptantes->hasMorePages())
+                <a href="{{ $adoptantes->nextPageUrl() }}" 
+                   class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            @else
+                <span class="px-3 py-1 rounded-md text-gray-400 cursor-not-allowed">
+                    <i class="fas fa-chevron-right"></i>
+                </span>
             @endif
         </div>
     </div>
-
-    <!-- Modal para ver detalles -->
-    <div id="viewModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-        style="display: none;">
-        <div class="bg-white rounded-lg p-6 max-w-2xl w-full mx-4 max-h-96 overflow-y-auto">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold">Detalles del Adoptante</h3>
-                <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div id="modalContent">
-            </div>
+@endif
         </div>
     </div>
 
-    <script>
-        function viewAdoptante(id) {
-            fetch(`/admin/adoptantes/${id}/view`)
-                .then(response => response.json())
-                .then(data => {
-                    const content = `
-                        <div class="space-y-4">
-                            <div>
-                                <h4 class="font-semibold text-gray-900">Información Personal</h4>
-                                <p><strong>Nombre:</strong> ${data.user.name}</p>
-                                <p><strong>Correo:</strong> ${data.user.email}</p>
-                                <p><strong>Fecha de Nacimiento:</strong> ${data.user.birth_date}</p>
-                                <p><strong>Registrado:</strong> ${new Date(data.user.created_at).toLocaleDateString()}</p>
+<!-- Modal para ver detalles -->
+<div id="viewModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
+    <div class="bg-white rounded-lg p-0 max-w-2xl w-full mx-4 max-h-[90vh] overflow-hidden shadow-2xl">
+        <!-- Encabezado con fondo amarillo -->
+        <div class="bg-yellow-500 px-6 py-4 flex justify-between items-center">
+            <h3 class="text-2xl font-bold text-gray-900">Detalles del Adoptante</h3>
+            <button onclick="closeModal()" class="text-gray-900 hover:text-black transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        
+        <!-- Contenido del modal -->
+        <div id="modalContent" class="p-6 overflow-y-auto" style="max-height: calc(90vh - 72px);">
+            <!-- El contenido se llenará dinámicamente -->
+        </div>
+    </div>
+</div>
+
+<script>
+    function viewAdoptante(id) {
+        fetch(`/admin/adoptantes/${id}/view`)
+            .then(response => response.json())
+            .then(data => {
+                const content = `
+                    <!-- Tarjeta de información principal -->
+                    <div class="bg-gray-50 rounded-lg p-5 mb-6 border border-gray-200">
+                        <div class="flex items-center space-x-4 mb-4">
+                            <div class="bg-yellow-100 text-yellow-800 rounded-full w-12 h-12 flex items-center justify-center">
+                                <i class="fas fa-user text-xl"></i>
                             </div>
-                            
                             <div>
-                                <h4 class="font-semibold text-gray-900">Solicitudes de Adopción</h4>
-                                ${data.adoptionRequests.length > 0 ? 
-                                    data.adoptionRequests.map(req => `
-                                            <div class="border p-3 rounded">
-                                                <p><strong>Mascota:</strong> ${req.pet.name}</p>
-                                                <p><strong>Estado:</strong> ${req.status}</p>
-                                                <p><strong>Mensaje:</strong> ${req.message || 'Sin mensaje'}</p>
-                                            </div>
-                                        `).join('') : 
-                                    '<p class="text-gray-500">No tiene solicitudes de adopción</p>'
-                                }
-                            </div>
-                            
-                            <div>
-                                <h4 class="font-semibold text-gray-900">Donaciones</h4>
-                                ${data.donations.length > 0 ? 
-                                    data.donations.map(don => `
-                                            <div class="border p-3 rounded">
-                                                <p><strong>Monto:</strong> S/ ${don.amount}</p>
-                                                <p><strong>Estado:</strong> ${don.status}</p>
-                                                <p><strong>Fecha:</strong> ${new Date(don.created_at).toLocaleDateString()}</p>
-                                            </div>
-                                        `).join('') : 
-                                    '<p class="text-gray-500">No ha realizado donaciones</p>'
-                                }
+                                <h2 class="text-xl font-bold text-gray-900">${data.user.name}</h2>
+                                <p class="text-gray-600">${data.user.email}</p>
                             </div>
                         </div>
-                    `;
-                    document.getElementById('modalContent').innerHTML = content;
-                    document.getElementById('viewModal').style.display = 'flex';
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-500">Fecha de Nacimiento</label>
+                                <p class="text-gray-900">${formatDate(data.user.birth_date)}</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-500">Registrado el</label>
+                                <p class="text-gray-900">${new Date(data.user.created_at).toLocaleDateString()}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sección de Solicitudes -->
+                    <div class="mb-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-lg font-semibold text-gray-900 flex items-center">
+                                <i class="fas fa-paw text-yellow-500 mr-2"></i>
+                                Solicitudes de Adopción
+                            </h4>
+                            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">${data.adoptionRequests.length}</span>
+                        </div>
+                        
+                        ${data.adoptionRequests.length > 0 ? 
+                            `<div class="space-y-3">${data.adoptionRequests.map(req => `
+                                <div class="border border-gray-200 rounded-lg p-4 hover:border-yellow-300 transition-colors">
+                                    <div class="flex justify-between items-start">
+                                        <div>
+                                            <h5 class="font-medium text-gray-900">${req.pet.name}</h5>
+                                            <span class="text-xs px-2 py-1 rounded-full ${getStatusColorClass(req.status)}">
+                                                ${req.status}
+                                            </span>
+                                        </div>
+                                        <span class="text-xs text-gray-500">${new Date(req.created_at).toLocaleDateString()}</span>
+                                    </div>
+                                    ${req.message ? `
+                                    <div class="mt-2 pt-2 border-t border-gray-100">
+                                        <p class="text-sm text-gray-600">${req.message}</p>
+                                    </div>
+                                    ` : ''}
+                                </div>
+                            `).join('')}</div>` : 
+                            `<div class="text-center py-6 bg-gray-50 rounded-lg">
+                                <i class="fas fa-inbox text-gray-300 text-3xl mb-2"></i>
+                                <p class="text-gray-500">No hay solicitudes de adopción</p>
+                            </div>`
+                        }
+                    </div>
+                    
+                    <!-- Sección de Donaciones -->
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-lg font-semibold text-gray-900 flex items-center">
+                                <i class="fas fa-hand-holding-heart text-yellow-500 mr-2"></i>
+                                Historial de Donaciones
+                            </h4>
+                            <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">${data.donations.length}</span>
+                        </div>
+                        
+                        ${data.donations.length > 0 ? 
+                            `<div class="space-y-3">${data.donations.map(don => `
+                                <div class="border border-gray-200 rounded-lg p-4 hover:border-yellow-300 transition-colors">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-gray-900">Donación #${don.id}</h5>
+                                            <span class="text-xs px-2 py-1 rounded-full ${getStatusColorClass(don.status)}">
+                                                ${don.status}
+                                            </span>
+                                        </div>
+                                        <span class="text-lg font-bold text-yellow-600">S/ ${don.amount}</span>
+                                    </div>
+                                    <div class="mt-2 pt-2 border-t border-gray-100 text-sm text-gray-600">
+                                        ${new Date(don.created_at).toLocaleDateString()}
+                                    </div>
+                                </div>
+                            `).join('')}</div>` : 
+                            `<div class="text-center py-6 bg-gray-50 rounded-lg">
+                                <i class="fas fa-piggy-bank text-gray-300 text-3xl mb-2"></i>
+                                <p class="text-gray-500">No hay donaciones registradas</p>
+                            </div>`
+                        }
+                    </div>
+                `;
+                document.getElementById('modalContent').innerHTML = content;
+                document.getElementById('viewModal').style.display = 'flex';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al cargar los detalles');
+            });
+    }
+
+    // Funciones auxiliares (se mantienen igual que en el diseño anterior)
+    function formatDate(dateString) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString(undefined, options);
+    }
+
+    function getStatusColorClass(status) {
+        const statusLower = status.toLowerCase();
+        if (statusLower.includes('aprobado') || statusLower.includes('completado')) {
+            return 'bg-green-100 text-green-800';
+        } else if (statusLower.includes('pendiente')) {
+            return 'bg-yellow-100 text-yellow-800';
+        } else if (statusLower.includes('rechazado') || statusLower.includes('cancelado')) {
+            return 'bg-red-100 text-red-800';
+        }
+        return 'bg-gray-100 text-gray-800';
+    }
+
+    function closeModal() {
+        document.getElementById('viewModal').style.display = 'none';
+    }
+
+    // Mantener las funciones existentes de edit y delete
+    //function editAdoptante(id) {
+        // Implementar edición
+       // alert('Función de edición en desarrollo');
+   // }
+
+    function deleteAdoptante(id) {
+        if (confirm('¿Estás seguro de que quieres eliminar este adoptante?')) {
+            fetch(`/admin/adoptantes/${id}/delete`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        alert(data.error || 'Error al eliminar');
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    alert('Error al cargar los detalles');
+                    alert('Error al eliminar el adoptante');
                 });
         }
-
-        function editAdoptante(id) {
-            // Implementar edición
-            alert('Función de edición en desarrollo');
-        }
-
-        function deleteAdoptante(id) {
-            if (confirm('¿Estás seguro de que quieres eliminar este adoptante?')) {
-                fetch(`/admin/adoptantes/${id}/delete`, {
-                        method: 'DELETE',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                            'Content-Type': 'application/json',
-                        },
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            location.reload();
-                        } else {
-                            alert(data.error || 'Error al eliminar');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Error al eliminar el adoptante');
-                    });
-            }
-        }
-
-        function closeModal() {
-            document.getElementById('viewModal').style.display = 'none';
-        }
+    }
 
         // Cerrar modal al hacer clic fuera
         //document.getElementById('viewModal').addEventListener('click', function(e) {
