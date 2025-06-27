@@ -32,7 +32,7 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-500">Raza</p>
-                            <p class="font-medium">{{ $pet->breed }}</p>
+                            <p class="font-medium">{{ $pet->raza ? $pet->raza->nombre : 'Sin raza' }}</p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-500">Sexo</p>

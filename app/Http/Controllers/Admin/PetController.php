@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pet;
+use App\Models\Raza; // Agregar import
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,13 +25,16 @@ class PetController extends Controller
         $searchTranslated = strtolower($search);
         $typeSearch = $translated[$searchTranslated] ?? $search;
 
-        $pets = Pet::when($search, function ($query) use ($typeSearch) {
-            $query->where('name', 'like', "%{$typeSearch}%")
-                ->orWhere('breed', 'like', "%{$typeSearch}%")
-                ->orWhere('type', 'like', "%{$typeSearch}%");
-        })
+        $pets = Pet::with('raza') // Cargar la relación
+            ->when($search, function ($query) use ($typeSearch) {
+                $query->where('name', 'like', "%{$typeSearch}%")
+                    ->orWhere('type', 'like', "%{$typeSearch}%")
+                    ->orWhereHas('raza', function($q) use ($typeSearch) {
+                        $q->where('nombre', 'like', "%{$typeSearch}%");
+                    });
+            })
             ->orderBy('created_at', 'desc')
-            ->paginate(10); // Paginacion de 10 por pagina esto le va a permitir al usuario ver 
+            ->paginate(5);
 
         return view('admin.pet.index', compact('pets', 'search'));
     }
@@ -40,7 +44,8 @@ class PetController extends Controller
      */
     public function create()
     {
-        return view('admin.pet.create');
+        $razas = Raza::orderBy('especie')->orderBy('nombre')->get();
+        return view('admin.pet.create', compact('razas'));
     }
 
     /**
@@ -51,19 +56,20 @@ class PetController extends Controller
         $validated = $request->validate([
             'name' => 'required|min:2|max:255',
             'type' => 'required|in:dog,cat',
-            'breed' => 'required|min:2|max:255',
+            'raza_id' => 'required|exists:razas,id', // Cambiado de breed a raza_id
             'age' => 'required|integer|min:0|max:20',
             'size' => 'required|in:small,medium,large',
             'gender' => 'required|in:male,female',
             'description' => 'required|min:10',
-            'photo' => 'nullable|image|max:2048', // pesar menos de 2MB
+            'photo' => 'nullable|image|max:2048',
             'is_vaccinated' => 'boolean',
             'is_sterilized' => 'boolean',
         ], [
             'name.required' => 'El nombre es requerido',
             'name.min' => 'El nombre debe tener al menos 2 caracteres',
             'type.required' => 'La especie es requerida',
-            'breed.required' => 'La raza es requerida',
+            'raza_id.required' => 'La raza es requerida',
+            'raza_id.exists' => 'La raza seleccionada no es válida',
             'age.required' => 'La edad es requerida',
             'age.integer' => 'La edad debe ser un número',
             'age.min' => 'La edad no puede ser negativa',
@@ -79,7 +85,7 @@ class PetController extends Controller
         $data = [
             'name' => $validated['name'],
             'type' => $validated['type'],
-            'breed' => $validated['breed'],
+            'raza_id' => $validated['raza_id'], // Cambiado de breed a raza_id
             'age' => $validated['age'],
             'size' => $validated['size'],
             'gender' => $validated['gender'],
@@ -97,7 +103,7 @@ class PetController extends Controller
 
         Pet::create($data);
 
-        return redirect()->route('admin.pet.index')
+        return redirect()->route('admin.pets.index')
             ->with('success', 'Mascota creada exitosamente.');
     }
 
@@ -106,6 +112,7 @@ class PetController extends Controller
      */
     public function show(Pet $pet)
     {
+        $pet->load('raza'); // Cargar la relación
         return view('admin.pet.show', compact('pet'));
     }
 
@@ -114,7 +121,9 @@ class PetController extends Controller
      */
     public function edit(Pet $pet)
     {
-        return view('admin.pet.edit', compact('pet'));
+        $razas = Raza::orderBy('especie')->orderBy('nombre')->get();
+        $pet->load('raza'); // Cargar la relación
+        return view('admin.pet.edit', compact('pet', 'razas'));
     }
 
     /**
@@ -125,20 +134,21 @@ class PetController extends Controller
         $validated = $request->validate([
             'name' => 'required|min:2|max:255',
             'type' => 'required|in:dog,cat',
-            'breed' => 'required|min:2|max:255',
+            'raza_id' => 'required|exists:razas,id', // Cambiado de breed a raza_id
             'age' => 'required|integer|min:0|max:20',
             'size' => 'required|in:small,medium,large',
             'gender' => 'required|in:male,female',
             'description' => 'required|min:10',
             'status' => 'required|in:available,adopted,pending',
-            'photo' => 'nullable|image|max:2048', // 2MB max
+            'photo' => 'nullable|image|max:2048',
             'is_vaccinated' => 'boolean',
             'is_sterilized' => 'boolean',
         ], [
             'name.required' => 'El nombre es requerido',
             'name.min' => 'El nombre debe tener al menos 2 caracteres',
             'type.required' => 'La especie es requerida',
-            'breed.required' => 'La raza es requerida',
+            'raza_id.required' => 'La raza es requerida',
+            'raza_id.exists' => 'La raza seleccionada no es válida',
             'age.required' => 'La edad es requerida',
             'age.integer' => 'La edad debe ser un número',
             'age.min' => 'La edad no puede ser negativa',
@@ -155,7 +165,7 @@ class PetController extends Controller
         $data = [
             'name' => $validated['name'],
             'type' => $validated['type'],
-            'breed' => $validated['breed'],
+            'raza_id' => $validated['raza_id'], // Cambiado de breed a raza_id
             'age' => $validated['age'],
             'size' => $validated['size'],
             'gender' => $validated['gender'],
@@ -165,9 +175,7 @@ class PetController extends Controller
             'is_sterilized' => $request->has('is_sterilized'),
         ];
 
-        // 
         if ($request->hasFile('photo')) {
-
             if ($pet->images && count($pet->images) > 0) {
                 Storage::disk('public')->delete($pet->images[0]);
             }
@@ -178,7 +186,32 @@ class PetController extends Controller
 
         $pet->update($data);
 
-        return redirect()->route('admin.pet.index')
+        return redirect()->route('admin.pets.index')
             ->with('success', 'Mascota actualizada exitosamente.');
+    }
+
+    /**
+     * Método para obtener razas por especie (AJAX)
+     */
+    public function getRazasByEspecie(Request $request)
+    {
+        $type = $request->get('type');
+        
+        // Convertir de inglés a español
+        $especieEspanol = match($type) {
+            'dog' => 'Perro',
+            'cat' => 'Gato',
+            default => null
+        };
+        
+        if (!$especieEspanol) {
+            return response()->json([]);
+        }
+        
+        $razas = Raza::where('especie', $especieEspanol)
+                    ->orderBy('nombre')
+                    ->get(['id', 'nombre']);
+        
+        return response()->json($razas);
     }
 }

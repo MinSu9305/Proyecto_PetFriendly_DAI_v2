@@ -59,6 +59,14 @@
                     <span>Mascotas</span>
                 </a>
 
+                <!-- Razas -->
+                <a href="{{ route('admin.razas.index') }}"
+                    class ="flex items-center space-x-3 px-4 py-3 {{ request()->routeIs('admin.razas.*') ? 'bg-pet-yellow text-black font-semibold' : 'text-gray-700 hover:bg-gray-100' }} rounded-lg">
+                    <i class="fas fa-dna"></i>
+                    <span>Razas</span>
+                </a>
+
+
                 <!-- Solicitudes -->
                 <a href="{{ route('admin.adoption-requests.index') }}"
                     class="flex items-center space-x-3 px-4 py-3 {{ request()->routeIs('admin.adoption-requests.*') ? 'bg-pet-yellow text-black font-semibold' : 'text-gray-700 hover:bg-gray-100' }} rounded-lg">

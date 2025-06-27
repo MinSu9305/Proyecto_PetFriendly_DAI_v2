@@ -30,7 +30,7 @@
                 </div>
                 <div>
                     <p class="text-sm font-medium text-gray-500">RAZA:</p>
-                    <p class="font-semibold">{{ $pet->breed }}</p>
+                    <p class="font-semibold">{{ $pet->raza ? $pet->raza->nombre : 'Sin raza' }}</p>
                 </div>
                 <div>
                     <p class="text-sm font-medium text-gray-500">SEXO:</p>

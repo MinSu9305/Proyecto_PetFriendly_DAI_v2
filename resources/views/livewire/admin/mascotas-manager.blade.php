@@ -36,7 +36,7 @@
                     <td class="px-6 py-4 text-gray-900 font-medium">{{ $pet->name }}</td>
                     <td class="px-6 py-4 text-gray-900">{{ $pet->age }} {{ $pet->age == 1 ? 'año' : 'años' }}</td>
                     <td class="px-6 py-4 text-gray-900">{{ $pet->type_in_spanish }}</td>
-                    <td class="px-6 py-4 text-gray-900">{{ $pet->breed }}</td>
+                    <td class="px-6 py-4 text-gray-900">{{ $pet->raza ? $pet->raza->nombre : 'Sin raza' }}</td>
                     <td class="px-6 py-4 text-gray-900">{{ $pet->gender_in_spanish }}</td>
                     <td class="px-6 py-4 text-center">
                         <div class="flex justify-center space-x-2">
@@ -249,7 +249,7 @@
                             <p><strong>Nombre:</strong> {{ $selectedPet->name }}</p>
                             <p><strong>Edad:</strong> {{ $selectedPet->age }} {{ $selectedPet->age == 1 ? 'año' : 'años' }}</p>
                             <p><strong>Especie:</strong> {{ $selectedPet->type_in_spanish }}</p>
-                            <p><strong>Raza:</strong> {{ $selectedPet->breed }}</p>
+                            <p><strong>Raza:</strong> {{ $selectedPet->raza->nombre ?? 'Sin raza' }}</p>
                             <p><strong>Sexo:</strong> {{ $selectedPet->gender_in_spanish }}</p>
                             <p><strong>Tamaño:</strong> {{ $selectedPet->size_in_spanish }}</p>
                             <p><strong>Estado:</strong> 

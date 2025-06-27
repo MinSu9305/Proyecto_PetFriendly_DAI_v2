@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>PetFriendly - Agregar Raza</title>
+    <link rel="icon" href="/images/LogoPag.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        .bg-pet-yellow { background-color: #FCD34D; }
+        .hover\:bg-pet-yellow:hover { background-color: #F59E0B; }
+        .text-pet-yellow { color: #F59E0B; }
+        .bg-pet-yellow-dark { background-color: #F59E0B; }
+    </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white shadow-lg">
+            <!-- Logo -->
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center space-x-3">
+                    <img src="/images/sloganphoto.png" alt="Logo Pet Friendly" class="w-10 h-10 object-contain">
+                    <span class="text-xl font-bold text-gray-900">Pet Friendly</span>
+                </div>
+            </div>
+
+            <!-- Navegación -->
+            <nav class="p-4 space-y-2">
+                <!-- Adoptantes -->
+                <a href="{{ route('admin.adoptantes') }}"
+                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-users"></i>
+                    <span>Adoptantes</span>
+                </a>
+
+                <!-- Mascotas -->
+                <a href="{{ route('admin.pets.index') }}"
+                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-paw"></i>
+                    <span>Mascotas</span>
+                </a>
+
+                <!-- Razas -->
+                <a href="{{ route('admin.razas.index') }}"
+                    class="flex items-center space-x-3 px-4 py-3 bg-pet-yellow text-black font-semibold rounded-lg">
+                    <i class="fas fa-dna"></i>
+                    <span>Razas</span>
+                </a>
+
+                <!-- Solicitudes -->
+                <a href="{{ route('admin.adoption-requests.index') }}"
+                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Solicitudes</span>
+                </a>
+
+                <!-- Donaciones -->
+                <a href="{{ route('admin.donations.index') }}"
+                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-heart"></i>
+                    <span>Donaciones</span>
+                </a>
+            </nav>
+
+            <!-- Botón para salir -->
+            <div class="absolute bottom-6 left-4 right-4">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg w-full">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Salir</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="flex-1 p-8">
+            <!-- Botón volver -->
+            <div class="mb-6">
+                <a href="{{ route('admin.razas.index') }}" 
+                   class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Volver
+                </a>
+            </div>
+
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900">Agregar Raza</h1>
+            </div>
+
+            <!-- Formulario -->
+            <div class="bg-white rounded-lg shadow p-6 max-w-2xl">
+                <form action="{{ route('admin.razas.store') }}" method="POST">
+                    @csrf
+                    
+                    <!-- Especie -->
+                    <div class="mb-6">
+                        <label for="especie" class="block text-sm font-medium text-gray-700 mb-2">
+                            Especie
+                        </label>
+                        <select name="especie" id="especie" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none @error('especie') border-red-500 @enderror">
+                            <option value="">Seleccionar especie</option>
+                            <option value="Perro" {{ old('especie') == 'Perro' ? 'selected' : '' }}>Perro</option>
+                            <option value="Gato" {{ old('especie') == 'Gato' ? 'selected' : '' }}>Gato</option>
+                        </select>
+                        @error('especie')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Nombre de la raza -->
+                    <div class="mb-6">
+                        <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">
+                            Nombre de la raza
+                        </label>
+                        <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none @error('nombre') border-red-500 @enderror"
+                               placeholder="Ej: Labrador, Siamés">
+                        @error('nombre')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="mb-6">
+                        <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-2">
+                            Descripción
+                        </label>
+                        <textarea name="descripcion" id="descripcion" rows="4"
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none @error('descripcion') border-red-500 @enderror"
+                                  placeholder="Describe las características de la raza...">{{ old('descripcion') }}</textarea>
+                        @error('descripcion')
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="flex gap-4">
+                        <button type="submit"
+                                class="px-6 py-2 bg-pet-yellow hover:bg-pet-yellow-dark text-black font-semibold rounded-lg">
+                            <i class="fas fa-save mr-2"></i>
+                            Guardar
+                        </button>
+                        <a href="{{ route('admin.razas.index') }}"
+                           class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg">
+                            Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

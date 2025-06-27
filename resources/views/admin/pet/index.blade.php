@@ -2,24 +2,38 @@
 
 @section('content')
 <div class="p-8">
+
     <!-- Header -->
-    <div class="flex justify-between items-center mb-8">
+    <div class="mb-8">
         <h1 class="text-3xl font-bold text-gray-900">Listar Mascotas</h1>
-        <a href="{{ route('admin.pets.create') }}" class="bg-pet-yellow hover:bg-pet-yellow-dark text-black font-bold px-6 py-3 rounded-lg flex items-center space-x-2">
+    </div>
+        <!-- Header con buscador y botón -->
+    <div class="mb-6 flex justify-between items-center">
+        <form method="GET" action="{{ route('admin.pets.index') }}" class="flex gap-4">
+            <input type="text" name="search" value="{{ $search ?? '' }}"
+                placeholder="Buscar por nombre, raza, especie"
+                class="w-96 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+            
+            <button type="submit"
+                class="px-6 py-2 bg-pet-yellow hover:bg-pet-yellow-dark text-black font-semibold rounded-lg">
+                <i class="fas fa-search"></i> Buscar
+            </button>
+
+            @if (!empty($search))
+                <a href="{{ route('admin.pets.index') }}"
+                    class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg">
+                    Limpiar
+                </a>
+            @endif
+        </form>
+
+        <a href="{{ route('admin.pets.create') }}"
+            class="px-6 py-2 bg-pet-yellow hover:bg-pet-yellow-dark text-black font-semibold rounded-lg flex items-center space-x-2">
             <i class="fas fa-plus"></i>
             <span>Agregar nueva mascota</span>
         </a>
     </div>
 
-    <!-- Barra de Busqueda -->
-    <div class="mb-6">
-        <form method="GET" action="{{ route('admin.pets.index') }}" class="relative">
-            <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Buscar por nombre, raza, especie" 
-                   class="w-full max-w-md px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-            <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
-            <button type="submit" class="hidden">Buscar</button>
-        </form>
-    </div>
 
     <!-- Mensaje -->
     @if (session('success'))
@@ -47,7 +61,7 @@
                     <td class="px-6 py-4 text-gray-900 font-medium">{{ $pet->name }}</td>
                     <td class="px-6 py-4 text-gray-900">{{ $pet->age }} {{ $pet->age == 1 ? 'año' : 'años' }}</td>
                     <td class="px-6 py-4 text-gray-900">{{ $pet->type_in_spanish }}</td>
-                    <td class="px-6 py-4 text-gray-900">{{ $pet->breed }}</td>
+                    <td class="px-6 py-4 text-gray-900">{{ $pet->raza ? $pet->raza->nombre : 'Sin raza' }}</td>
                     <td class="px-6 py-4 text-gray-900">{{ $pet->gender_in_spanish }}</td>
                     <td class="px-6 py-4 text-center">
                         <div class="flex justify-center space-x-2">

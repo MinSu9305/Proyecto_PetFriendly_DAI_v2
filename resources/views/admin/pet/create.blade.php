@@ -35,12 +35,11 @@
                 <!-- Especie -->
                 <div>
                     <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Especie</label>
-                    <select name="type" id="type" 
+                    <select name="type" id="type" onchange="loadRazas()" 
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
                         <option value="">Seleccionar...</option>
                         <option value="dog" {{ old('type') == 'dog' ? 'selected' : '' }}>Perro</option>
                         <option value="cat" {{ old('type') == 'cat' ? 'selected' : '' }}>Gato</option>
-                        <option value="other" {{ old('type') == 'other' ? 'selected' : '' }}>Otro</option>
                     </select>
                     @error('type') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
@@ -59,10 +58,12 @@
 
                 <!-- Raza -->
                 <div>
-                    <label for="breed" class="block text-sm font-medium text-gray-700 mb-1">Raza</label>
-                    <input type="text" name="breed" id="breed" value="{{ old('breed') }}" 
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                    @error('breed') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                    <label for="raza_id" class="block text-sm font-medium text-gray-700 mb-1">Raza</label>
+                    <select name="raza_id" id="raza_id" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                        <option value="">Primero selecciona una especie...</option>
+                    </select>
+                    @error('raza_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
 
                 <!-- Tamaño -->
@@ -144,5 +145,50 @@
             reader.readAsDataURL(file);
         }
     }
+
+    function loadRazas() {
+        const typeSelect = document.getElementById('type');
+        const razaSelect = document.getElementById('raza_id');
+        const selectedType = typeSelect.value;
+        
+        // Limpiar opciones de raza
+        razaSelect.innerHTML = '<option value="">Cargando razas...</option>';
+        
+        if (!selectedType) {
+            razaSelect.innerHTML = '<option value="">Primero selecciona una especie...</option>';
+            return;
+        }
+        
+        // Hacer petición AJAX para obtener razas
+        fetch(`{{ route('admin.pets.getRazasByEspecie') }}?type=${selectedType}`)
+            .then(response => response.json())
+            .then(data => {
+                razaSelect.innerHTML = '<option value="">Seleccionar raza...</option>';
+                
+                data.forEach(raza => {
+                    const option = document.createElement('option');
+                    option.value = raza.id;
+                    option.textContent = raza.nombre;
+                    
+                    // Mantener selección si hay old value
+                    if ('{{ old("raza_id") }}' == raza.id) {
+                        option.selected = true;
+                    }
+                    
+                    razaSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                razaSelect.innerHTML = '<option value="">Error al cargar razas</option>';
+            });
+    }
+
+    // Cargar razas si hay un tipo seleccionado (para old values)
+    document.addEventListener('DOMContentLoaded', function() {
+        if (document.getElementById('type').value) {
+            loadRazas();
+        }
+    });
 </script>
 @endsection

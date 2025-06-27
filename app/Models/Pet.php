@@ -12,7 +12,7 @@ class Pet extends Model
     protected $fillable = [
         'name',
         'type',
-        'breed',
+        'raza_id',
         'age',
         'size',
         'gender',
@@ -30,6 +30,11 @@ class Pet extends Model
         'is_sterilized' => 'boolean',
     ];
 
+    public function raza()
+    {
+        return $this->belongsTo(Raza::class);
+    }
+
     public function adoptionRequests()
     {
         return $this->hasMany(AdoptionRequest::class);
@@ -45,7 +50,7 @@ class Pet extends Model
         return match($this->type) {
             'dog' => 'Perro',
             'cat' => 'Gato',
-            'other' => 'Otro',
+            //'other' => 'Otro',
             default => $this->type,
         };
     }

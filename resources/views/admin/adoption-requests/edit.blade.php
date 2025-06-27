@@ -35,7 +35,7 @@
                         <label for="pet_id" class="block text-sm font-medium text-gray-700 mb-1">Mascota</label>
                         <div class="bg-gray-100 p-2 rounded-lg border border-gray-300">
                             {{ $adoptionRequest->pet->name }} ({{ $adoptionRequest->pet->type_in_spanish }},
-                            {{ $adoptionRequest->pet->breed }})
+                            {{ $adoptionRequest->pet->raza ? $adoptionRequest->pet->raza->nombre : 'Sin raza' }})
                         </div>
                         <input type="hidden" name="pet_id" value="{{ $adoptionRequest->pet_id }}">
 

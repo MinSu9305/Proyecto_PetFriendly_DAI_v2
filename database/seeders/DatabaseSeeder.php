@@ -82,78 +82,8 @@ class DatabaseSeeder extends Seeder
             User::create($adoptante);
         }
 
-        // Crear mascotas de prueba
-        $mascotas = [
-            [
-                'name' => 'Leo',
-                'type' => 'cat',
-                'breed' => 'Mestizo',
-                'age' => 2,
-                'size' => 'small',
-                'gender' => 'female',
-                'description' => 'Gatita muy cariñosa y juguetona, perfecta para familias.',
-                'status' => 'available',
-                'is_vaccinated' => true,
-                'is_sterilized' => true,
-            ],
-            [
-                'name' => 'Lucas',
-                'type' => 'dog',
-                'breed' => 'Labrador Mix',
-                'age' => 3,
-                'size' => 'medium',
-                'gender' => 'male',
-                'description' => 'Perro muy activo y leal, ideal para personas que disfrutan del ejercicio.',
-                'status' => 'adopted',
-                'is_vaccinated' => true,
-                'is_sterilized' => true,
-            ],
-            [
-                'name' => 'Dobby',
-                'type' => 'dog',
-                'breed' => 'Yorkshire Terrier',
-                'age' => 1,
-                'size' => 'small',
-                'gender' => 'male',
-                'description' => 'Cachorro muy energético y cariñoso.',
-                'status' => 'available',
-                'is_vaccinated' => true,
-                'is_sterilized' => false,
-            ],
-            [
-                'name' => 'Lulu',
-                'type' => 'cat',
-                'breed' => 'Siamés',
-                'age' => 4,
-                'size' => 'medium',
-                'gender' => 'female',
-                'description' => 'Gata tranquila y elegante, perfecta para apartamentos.',
-                'status' => 'available',
-                'is_vaccinated' => true,
-                'is_sterilized' => true,
-            ],
-        ];
 
-        foreach ($mascotas as $mascota) {
-            Pet::create($mascota);
-        }
 
-        // Crear solicitudes de adopción
-        AdoptionRequest::create([
-            'user_id' => 2, // María Angélica
-            'pet_id' => 1, // Leo
-            'status' => 'pending',
-            'message' => 'Me encantaría adoptar a Leo, tengo experiencia con gatos.',
-        ]);
-
-        AdoptionRequest::create([
-            'user_id' => 3, // Jose Suarez
-            'pet_id' => 2, // Lucas
-            'status' => 'approved',
-            'message' => 'Tengo un jardín grande y mucho tiempo para dedicarle.',
-            'approved_at' => now(),
-            'approved_by' => 1,
-        ]);
 
         // Crear donaciones
         $donaciones = [

@@ -37,7 +37,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
 
     // Rutas de mascotas (CRUD)
-    Route::resource('pets', PetController::class);
+    //Route::resource('pets', PetController::class);
     
     // Rutas de solicitudes de adopción (CRUD)
     Route::resource('adoption-requests', AdoptionRequestController::class);
@@ -54,6 +54,15 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // AJAX routes para adoptantes
     Route::get('/adoptantes/{user}/view', [DashboardController::class, 'viewAdoptante'])->name('adoptantes.view');
     Route::delete('/adoptantes/{user}/delete', [DashboardController::class, 'deleteAdoptante'])->name('adoptantes.delete');
+
+    // Rutas para Razas
+    Route::resource('razas', App\Http\Controllers\Admin\RazaController::class);
+
+    // Ruta AJAX para obtener razas por especie
+    Route::get('pets/razas-by-especie', [App\Http\Controllers\Admin\PetController::class, 'getRazasByEspecie'])
+         ->name('pets.getRazasByEspecie');
+
+    Route::resource('pets', App\Http\Controllers\Admin\PetController::class);
 });
 
 
