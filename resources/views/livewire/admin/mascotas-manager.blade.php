@@ -198,6 +198,7 @@
                 </div>
 
                 <!-- Checkboxes -->
+                <!--
                 <div class="grid grid-cols-2 gap-4">
                     <div class="flex items-center">
                         <input type="checkbox" wire:model="is_vaccinated" id="vaccinated" class="mr-2">
@@ -207,7 +208,7 @@
                         <input type="checkbox" wire:model="is_sterilized" id="sterilized" class="mr-2">
                         <label for="sterilized" class="text-sm text-gray-700">Esterilizado</label>
                     </div>
-                </div>
+                </div>-->
 
                 <!-- Botones -->
                 <div class="flex justify-end space-x-4 pt-4">
@@ -261,12 +262,13 @@
                                 </span>
                             </p>
                         </div>
-
+                        <!--
                         <div>
                             <h4 class="font-semibold text-gray-900">Estado de Salud</h4>
                             <p><strong>Vacunado:</strong> {{ $selectedPet->is_vaccinated ? 'Sí' : 'No' }}</p>
                             <p><strong>Esterilizado:</strong> {{ $selectedPet->is_sterilized ? 'Sí' : 'No' }}</p>
                         </div>
+                        -->
 
                         <div>
                             <h4 class="font-semibold text-gray-900">Descripción</h4>

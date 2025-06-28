@@ -128,6 +128,7 @@
             </div>
 
             <!-- Checkboxes -->
+            <!--
             <div class="grid grid-cols-2 gap-4">
                 <div class="flex items-center">
                     <input type="checkbox" name="is_vaccinated" id="is_vaccinated" value="1" {{ old('is_vaccinated', $pet->is_vaccinated) ? 'checked' : '' }} class="mr-2">
@@ -137,7 +138,7 @@
                     <input type="checkbox" name="is_sterilized" id="is_sterilized" value="1" {{ old('is_sterilized', $pet->is_sterilized) ? 'checked' : '' }} class="mr-2">
                     <label for="is_sterilized" class="text-sm text-gray-700">Esterilizado</label>
                 </div>
-            </div>
+            </div>-->
 
             <!-- Botones -->
             <div class="flex justify-end space-x-4 pt-4">

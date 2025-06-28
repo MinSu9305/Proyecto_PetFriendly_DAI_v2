@@ -19,15 +19,15 @@ class Pet extends Model
         'description',
         'images',
         'status',
-        'is_vaccinated',
-        'is_sterilized',
-        'medical_notes',
+        //'is_vaccinated',
+        //'is_sterilized',
+        //'medical_notes',
     ];
 
     protected $casts = [
         'images' => 'array',
-        'is_vaccinated' => 'boolean',
-        'is_sterilized' => 'boolean',
+        //'is_vaccinated' => 'boolean',
+        //'is_sterilized' => 'boolean',
     ];
 
     public function raza()

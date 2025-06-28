@@ -62,8 +62,8 @@ class PetController extends Controller
             'gender' => 'required|in:male,female',
             'description' => 'required|min:10',
             'photo' => 'nullable|image|max:2048',
-            'is_vaccinated' => 'boolean',
-            'is_sterilized' => 'boolean',
+            //'is_vaccinated' => 'boolean',
+            //'is_sterilized' => 'boolean',
         ], [
             'name.required' => 'El nombre es requerido',
             'name.min' => 'El nombre debe tener al menos 2 caracteres',
@@ -91,8 +91,8 @@ class PetController extends Controller
             'gender' => $validated['gender'],
             'description' => $validated['description'],
             'status' => 'available',
-            'is_vaccinated' => $request->has('is_vaccinated'),
-            'is_sterilized' => $request->has('is_sterilized'),
+            //'is_vaccinated' => $request->has('is_vaccinated'),
+            //'is_sterilized' => $request->has('is_sterilized'),
         ];
 
         // Si hay foto
@@ -141,8 +141,8 @@ class PetController extends Controller
             'description' => 'required|min:10',
             'status' => 'required|in:available,adopted,pending',
             'photo' => 'nullable|image|max:2048',
-            'is_vaccinated' => 'boolean',
-            'is_sterilized' => 'boolean',
+            //'is_vaccinated' => 'boolean',
+            //'is_sterilized' => 'boolean',
         ], [
             'name.required' => 'El nombre es requerido',
             'name.min' => 'El nombre debe tener al menos 2 caracteres',
@@ -171,8 +171,8 @@ class PetController extends Controller
             'gender' => $validated['gender'],
             'description' => $validated['description'],
             'status' => $validated['status'],
-            'is_vaccinated' => $request->has('is_vaccinated'),
-            'is_sterilized' => $request->has('is_sterilized'),
+            //'is_vaccinated' => $request->has('is_vaccinated'),
+            //'is_sterilized' => $request->has('is_sterilized'),
         ];
 
         if ($request->hasFile('photo')) {

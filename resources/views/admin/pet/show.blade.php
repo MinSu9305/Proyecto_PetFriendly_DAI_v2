@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-
+<!--
                 <div>
                     <h2 class="text-xl font-semibold text-gray-900 mb-4">Estado de Salud</h2>
                     <div class="grid grid-cols-2 gap-4">
@@ -68,7 +68,7 @@
                             <p class="font-medium">{{ $pet->is_sterilized ? 'Sí' : 'No' }}</p>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
                 <div>
                     <h2 class="text-xl font-semibold text-gray-900 mb-4">Descripción</h2>

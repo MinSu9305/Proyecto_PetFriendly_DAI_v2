@@ -22,9 +22,6 @@ return new class extends Migration
             $table->text('description');
             $table->json('images')->nullable();
             $table->enum('status', ['available', 'adopted', 'pending'])->default('available');
-            $table->boolean('is_vaccinated')->default(false);
-            $table->boolean('is_sterilized')->default(false);
-            $table->text('medical_notes')->nullable();
             $table->timestamps();
         });
     }

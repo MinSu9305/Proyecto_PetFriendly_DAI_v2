@@ -63,9 +63,11 @@
 
             <!-- Boton de salir -->
             <div class="absolute bottom-6 left-4 right-4">
-                <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}" id="logout-form">
                     @csrf
-                    <button type="submit" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg w-full">
+                    <button type="submit" 
+                        onclick="this.disabled=true; this.form.submit();" 
+                        class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg w-full">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Salir</span>
                     </button>
