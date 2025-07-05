@@ -166,7 +166,7 @@
                 </table>
             </div>
 
-<!-- Paginacion -->
+<!-- Paginacion de adoptantes-->
 @if ($adoptantes->hasPages())
     <div class="mt-6 flex justify-center items-center">
         <div class="flex items-center gap-2 bg-white rounded-lg shadow-sm p-2">

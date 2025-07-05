@@ -148,11 +148,13 @@
                                               onsubmit="return confirm('¿Estás seguro de eliminar esta raza?')">
                                             @csrf
                                             @method('DELETE')
+                                            <!--
                                             <button type="submit" 
                                                     class="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors" 
                                                     title="Eliminar">
                                                 <i class="fas fa-trash"></i>
                                             </button>
+                                        -->
                                         </form>
                                     </div>
                                 </td>
@@ -168,50 +170,50 @@
                 </table>
             </div>
 
-            <!-- Paginación -->
-            @if ($razas->hasPages())
-                <div class="mt-6 flex justify-center items-center">
-                    <div class="flex items-center gap-2 bg-white rounded-lg shadow-sm p-2">
-                        {{-- Previous Page Link --}}
-                        @if ($razas->onFirstPage())
-                            <span class="px-3 py-1 rounded-md text-gray-400 cursor-not-allowed">
-                                <i class="fas fa-chevron-left"></i>
-                            </span>
-                        @else
-                            <a href="{{ $razas->previousPageUrl() }}" 
-                               class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
-                                <i class="fas fa-chevron-left"></i>
-                            </a>
-                        @endif
-
-                        {{-- Pagination Elements --}}
-                        @foreach ($razas->getUrlRange(1, $razas->lastPage()) as $page => $url)
-                            @if ($page == $razas->currentPage())
-                                <span class="px-3 py-1 rounded-md bg-pet-yellow text-black font-medium">
-                                    {{ $page }}
-                                </span>
-                            @else
-                                <a href="{{ $url }}" 
-                                   class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
-                                    {{ $page }}
-                                </a>
-                            @endif
-                        @endforeach
-
-                        {{-- Next Page Link --}}
-                        @if ($razas->hasMorePages())
-                            <a href="{{ $razas->nextPageUrl() }}" 
-                               class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
-                        @else
-                            <span class="px-3 py-1 rounded-md text-gray-400 cursor-not-allowed">
-                                <i class="fas fa-chevron-right"></i>
-                            </span>
-                        @endif
-                    </div>
-                </div>
+<!-- Paginacion para Razas -->
+@if ($razas->hasPages())
+    <div class="mt-6 flex justify-center items-center">
+        <div class="flex items-center gap-2 bg-white rounded-lg shadow-sm p-2">
+            {{-- Previous Page Link --}}
+            @if ($razas->onFirstPage())
+                <span class="px-3 py-1 rounded-md text-gray-400 cursor-not-allowed">
+                    <i class="fas fa-chevron-left"></i>
+                </span>
+            @else
+                <a href="{{ $razas->previousPageUrl() }}" 
+                   class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
             @endif
+
+            {{-- Pagination Elements --}}
+            @foreach ($razas->getUrlRange(1, $razas->lastPage()) as $page => $url)
+                @if ($page == $razas->currentPage())
+                    <span class="px-3 py-1 rounded-md bg-pet-yellow text-black font-medium">
+                        {{ $page }}
+                    </span>
+                @else
+                    <a href="{{ $url }}" 
+                       class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
+                        {{ $page }}
+                    </a>
+                @endif
+            @endforeach
+
+            {{-- Next Page Link --}}
+            @if ($razas->hasMorePages())
+                <a href="{{ $razas->nextPageUrl() }}" 
+                   class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            @else
+                <span class="px-3 py-1 rounded-md text-gray-400 cursor-not-allowed">
+                    <i class="fas fa-chevron-right"></i>
+                </span>
+            @endif
+        </div>
+    </div>
+@endif
         </div>
     </div>
 </body>

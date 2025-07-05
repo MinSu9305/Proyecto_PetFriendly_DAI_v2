@@ -87,11 +87,49 @@
         </table>
     </div>
 
-    <!-- Paginacion -->
-    @if($pets->hasPages())
-    <div class="mt-6">
-        {{ $pets->links() }}
+    <!-- Paginacion para mascotas -->
+@if($pets->hasPages())
+    <div class="mt-6 flex justify-center items-center">
+        <div class="flex items-center gap-2 bg-white rounded-lg shadow-sm p-2">
+            {{-- Previous Page Link --}}
+            @if ($pets->onFirstPage())
+                <span class="px-3 py-1 rounded-md text-gray-400 cursor-not-allowed">
+                    <i class="fas fa-chevron-left"></i>
+                </span>
+            @else
+                <a href="{{ $pets->previousPageUrl() }}" 
+                   class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            @endif
+
+            {{-- Pagination Elements --}}
+            @foreach ($pets->getUrlRange(1, $pets->lastPage()) as $page => $url)
+                @if ($page == $pets->currentPage())
+                    <span class="px-3 py-1 rounded-md bg-pet-yellow text-black font-medium">
+                        {{ $page }}
+                    </span>
+                @else
+                    <a href="{{ $url }}" 
+                       class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
+                        {{ $page }}
+                    </a>
+                @endif
+            @endforeach
+
+            {{-- Next Page Link --}}
+            @if ($pets->hasMorePages())
+                <a href="{{ $pets->nextPageUrl() }}" 
+                   class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            @else
+                <span class="px-3 py-1 rounded-md text-gray-400 cursor-not-allowed">
+                    <i class="fas fa-chevron-right"></i>
+                </span>
+            @endif
+        </div>
     </div>
-    @endif
+@endif
 </div>
 @endsection
