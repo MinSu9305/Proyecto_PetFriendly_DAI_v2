@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\CustomAuthController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -13,7 +14,8 @@ use Illuminate\Support\Facades\Auth;
 
 // Página principal
 Route::get('/', HomePage::class)->name('home');
- // Ruta dashboard que redirija a user.profile
+
+// Ruta dashboard que redirija a user.profile
 Route::get('/dashboard', function () {
     return redirect()->route('user.profile');
 })->middleware(['auth'])->name('dashboard');
@@ -21,6 +23,7 @@ Route::get('/dashboard', function () {
 // Rutas de autenticación tradicionales
 Route::post('/login', [CustomAuthController::class, 'login'])->name('login');
 Route::post('/register', [CustomAuthController::class, 'register'])->name('register');
+
 // Cierra sesión y redirige al inicio
 Route::post('/logout', function () {
     Auth::logout();
@@ -29,15 +32,10 @@ Route::post('/logout', function () {
     return redirect('/');
 })->name('logout');
 
-
 // Dashboard Admin (requiere autenticación y rol admin)
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/adoptantes', [DashboardController::class, 'adoptantes'])->name('adoptantes');
-
-
-    // Rutas de mascotas (CRUD)
-    //Route::resource('pets', PetController::class);
     
     // Rutas de solicitudes de adopción (CRUD)
     Route::resource('adoption-requests', AdoptionRequestController::class);
@@ -54,26 +52,24 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     // AJAX routes para adoptantes
     Route::get('/adoptantes/{user}/view', [DashboardController::class, 'viewAdoptante'])->name('adoptantes.view');
     Route::delete('/adoptantes/{user}/delete', [DashboardController::class, 'deleteAdoptante'])->name('adoptantes.delete');
-
+    
     // Rutas para Especies
     Route::resource('especies', App\Http\Controllers\Admin\EspecieController::class);
     
-    // Rutas para Razas (actualizar para usar especies)
+    // Rutas para Razas
     Route::resource('razas', App\Http\Controllers\Admin\RazaController::class);
     
-    // Rutas para Pets
-    Route::resource('pets', App\Http\Controllers\Admin\PetController::class);
+    // *** RUTAS PARA PETS - CORREGIDAS ***
+    // Ruta AJAX específica ANTES del resource (DENTRO del grupo admin)
+    Route::get('/pets/razas-by-especie', [PetController::class, 'getRazasByEspecie'])
+        ->name('pets.razas-by-especie');
     
-    // Cambiar el parámetro de la ruta AJAX
-    Route::get('pets/razas-by-especie', [App\Http\Controllers\Admin\PetController::class, 'getRazasByEspecie'])
-     ->name('pets.getRazasByEspecie');
-        
+    // Resource routes para pets
+    Route::resource('pets', PetController::class);
 });
-
 
 // Rutas para usuarios (adoptantes)
 Route::middleware(['auth'])->name('user.')->group(function () {
-
     // Perfil
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -93,5 +89,3 @@ Route::middleware(['auth'])->name('user.')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-
-

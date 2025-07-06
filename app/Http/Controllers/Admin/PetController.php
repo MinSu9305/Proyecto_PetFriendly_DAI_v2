@@ -43,11 +43,11 @@ class PetController extends Controller
     /**
      * Muestra el formulario para registrar una nueva mascota.
      */
-    public function create()
-    {
-        $especies = Especie::orderBy('nombre')->get();
-        return view('admin.pet.create', compact('especies'));
-    }
+public function create()
+{
+    $especies = Especie::orderBy('nombre')->get();
+    return view('admin.pet.create', compact('especies'));
+}
 
     /**
      * Guarda una nueva mascota en la base de datos con validación y subida opcional de imagen.
@@ -120,13 +120,13 @@ class PetController extends Controller
     /**
      * Muestra el formulario para editar una mascota
      */
-    public function edit(Pet $pet)
-    {
-        $especies = Especie::orderBy('nombre')->get();
-        $pet->load('especie', 'raza');
-        return view('admin.pet.edit', compact('pet', 'especies'));
-    }
-    /**
+public function edit(Pet $pet)
+{
+    $especies = Especie::orderBy('nombre')->get();
+    
+    return view('admin.pet.edit', compact('pet', 'especies'));
+}
+   /**
      * Actualiza los datos de una mascota. Similar al método store 
      */
     public function update(Request $request, Pet $pet)
@@ -190,12 +190,13 @@ class PetController extends Controller
             ->with('success', 'Mascota actualizada exitosamente.');
     }
 
-    /**
-     * Método para obtener razas por especie (AJAX) - ACTUALIZADO
-     */
-    public function getRazasByEspecie(Request $request)
-    {
-        $especie_id = $request->get('especie_id'); // Cambiar de type a especie_id
+/**
+ * Obtener razas por especie (para AJAX)
+ */
+public function getRazasByEspecie(Request $request)
+{
+    try {
+        $especie_id = $request->get('especie_id');
         
         if (!$especie_id) {
             return response()->json([]);
@@ -206,5 +207,8 @@ class PetController extends Controller
                     ->get(['id', 'nombre']);
         
         return response()->json($razas);
+    } catch (\Exception $e) {
+        return response()->json([], 500);
     }
+}
 }

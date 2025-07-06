@@ -7,7 +7,7 @@
         <a href="{{ route('admin.pets.index') }}" class="mr-4 text-gray-600 hover:text-gray-900">
             <i class="fas fa-arrow-left"></i> Volver
         </a>
-        <h1 class="text-3xl font-bold text-gray-900">Agregar Mascota</h1>
+        <h1 class="text-3xl font-bold text-gray-900">Agregar Nueva Mascota</h1>
     </div>
 
     <!-- Formulario -->
@@ -19,8 +19,8 @@
                 <!-- Nombre -->
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-                    <input type="text" name="name" id="name" value="{{ old('name') }}" 
-                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                    <input type="text" name="name" id="name" value="{{ old('name') }}"
+                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
                     @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
 
@@ -33,25 +33,25 @@
                 </div>
 
                 <!-- Especie -->
-<div>
-    <label for="especie_id" class="block text-sm font-medium text-gray-700 mb-1">Especie</label>
-    <select name="especie_id" id="especie_id" onchange="loadRazas()" 
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-        <option value="">Seleccionar...</option>
-        @foreach($especies as $especie)
-            <option value="{{ $especie->id }}" {{ old('especie_id') == $especie->id ? 'selected' : '' }}>
-                {{ $especie->nombre }}
-            </option>
-        @endforeach
-    </select>
-    @error('especie_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-</div>
+                <div>
+                    <label for="especie_id" class="block text-sm font-medium text-gray-700 mb-1">Especie</label>
+                    <select name="especie_id" id="especie_id" onchange="loadRazas()"
+                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                        <option value="">Seleccionar...</option>
+                        @foreach($especies as $especie)
+                            <option value="{{ $especie->id }}" {{ old('especie_id') == $especie->id ? 'selected' : '' }}>
+                                {{ $especie->nombre }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('especie_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                </div>
 
                 <!-- Sexo -->
                 <div>
                     <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">Sexo</label>
-                    <select name="gender" id="gender" 
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                    <select name="gender" id="gender"
+                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
                         <option value="">Seleccionar...</option>
                         <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Macho</option>
                         <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Hembra</option>
@@ -60,26 +60,39 @@
                 </div>
 
                 <!-- Raza -->
-<div>
-    <label for="raza_id" class="block text-sm font-medium text-gray-700 mb-1">Raza</label>
-    <select name="raza_id" id="raza_id" 
-            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-        <option value="">Primero selecciona una especie...</option>
-    </select>
-    @error('raza_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-</div>
+                <div>
+                    <label for="raza_id" class="block text-sm font-medium text-gray-700 mb-1">Raza</label>
+                    <select name="raza_id" id="raza_id"
+                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                        <option value="">Seleccionar raza...</option>
+                        <!-- Las opciones se cargarán dinámicamente -->
+                    </select>
+                    @error('raza_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                </div>
 
                 <!-- Tamaño -->
                 <div>
                     <label for="size" class="block text-sm font-medium text-gray-700 mb-1">Tamaño</label>
-                    <select name="size" id="size" 
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                    <select name="size" id="size"
+                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
                         <option value="">Seleccionar...</option>
                         <option value="small" {{ old('size') == 'small' ? 'selected' : '' }}>Pequeño</option>
                         <option value="medium" {{ old('size') == 'medium' ? 'selected' : '' }}>Mediano</option>
                         <option value="large" {{ old('size') == 'large' ? 'selected' : '' }}>Grande</option>
                     </select>
                     @error('size') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                </div>
+
+                <!-- Estado -->
+                <div>
+                    <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                    <select name="status" id="status"
+                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+                        <option value="available" {{ old('status') == 'available' ? 'selected' : '' }}>Disponible</option>
+                        <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pendiente</option>
+                        <option value="adopted" {{ old('status') == 'adopted' ? 'selected' : '' }}>Adoptado</option>
+                    </select>
+                    @error('status') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                 </div>
             </div>
 
@@ -95,7 +108,8 @@
                     </label>
                     
                     <div id="preview-container" class="mt-4 hidden">
-                        <img id="preview-image" class="w-32 h-32 object-cover rounded-lg mx-auto">
+                        <img id="preview-image" src="/placeholder.svg"
+                              class="w-32 h-32 object-cover rounded-lg mx-auto">
                     </div>
                 </div>
                 @error('photo') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -104,32 +118,19 @@
             <!-- Descripción -->
             <div>
                 <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Descripción</label>
-                <textarea name="description" id="description" rows="4" 
-                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">{{ old('description') }}</textarea>
+                <textarea name="description" id="description" rows="4"
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">{{ old('description') }}</textarea>
                 @error('description') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
             </div>
 
-            <!-- Checkboxes -->
-            <!--
-            <div class="grid grid-cols-2 gap-4">
-                <div class="flex items-center">
-                    <input type="checkbox" name="is_vaccinated" id="is_vaccinated" value="1" {{ old('is_vaccinated') ? 'checked' : '' }} class="mr-2">
-                    <label for="is_vaccinated" class="text-sm text-gray-700">Vacunado</label>
-                </div>
-                <div class="flex items-center">
-                    <input type="checkbox" name="is_sterilized" id="is_sterilized" value="1" {{ old('is_sterilized') ? 'checked' : '' }} class="mr-2">
-                    <label for="is_sterilized" class="text-sm text-gray-700">Esterilizado</label>
-                </div>
-            </div>-->
-
             <!-- Botones -->
             <div class="flex justify-end space-x-4 pt-4">
-                <a href="{{ route('admin.pets.index') }}" 
-                   class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg">
+                <a href="{{ route('admin.pets.index') }}"
+                    class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg">
                     Cancelar
                 </a>
-                <button type="submit" 
-                        class="px-6 py-2 bg-pet-yellow hover:bg-pet-yellow-dark text-black font-semibold rounded-lg">
+                <button type="submit"
+                         class="px-6 py-2 bg-pet-yellow hover:bg-pet-yellow-dark text-black font-semibold rounded-lg">
                     Guardar
                 </button>
             </div>
@@ -151,11 +152,10 @@
     }
 
     function loadRazas() {
-        const especieSelect = document.getElementById('especie_id'); // Cambiar de type a especie_id
+        const especieSelect = document.getElementById('especie_id');
         const razaSelect = document.getElementById('raza_id');
         const selectedEspecie = especieSelect.value;
-        
-        console.log('Especie seleccionada:', selectedEspecie); // Para debug
+        const currentRazaId = '{{ old("raza_id") }}'; // Solo old() para create
         
         // Limpiar opciones de raza
         razaSelect.innerHTML = '<option value="">Cargando razas...</option>';
@@ -165,57 +165,46 @@
             return;
         }
         
-        // Construir la URL correctamente
-        const url = `{{ url('admin/pets/razas-by-especie') }}?especie_id=${selectedEspecie}`; // Cambiar parámetro
-        console.log('URL de petición:', url); // Para debug
-        
         // Hacer petición AJAX para obtener razas
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            }
-        })
-        .then(response => {
-            console.log('Respuesta recibida:', response); // Para debug
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Datos recibidos:', data); // Para debug
-            razaSelect.innerHTML = '<option value="">Seleccionar raza...</option>';
-            
-            if (data.length === 0) {
-                razaSelect.innerHTML = '<option value="">No hay razas disponibles para esta especie</option>';
-                return;
-            }
-            
-            data.forEach(raza => {
-                const option = document.createElement('option');
-                option.value = raza.id;
-                option.textContent = raza.nombre;
-                
-                // Mantener selección si hay old value
-                if ('{{ old("raza_id") }}' == raza.id) {
-                    option.selected = true;
+        fetch(`{{ route('admin.pets.razas-by-especie') }}?especie_id=${selectedEspecie}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
                 }
+                return response.json();
+            })
+            .then(data => {
+                razaSelect.innerHTML = '<option value="">Seleccionar raza...</option>';
                 
-                razaSelect.appendChild(option);
+                if (data && data.length > 0) {
+                    data.forEach(raza => {
+                        const option = document.createElement('option');
+                        option.value = raza.id;
+                        option.textContent = raza.nombre;
+                        
+                        // Mantener selección si hay old() data
+                        if (currentRazaId == raza.id) {
+                            option.selected = true;
+                        }
+                        
+                        razaSelect.appendChild(option);
+                    });
+                } else {
+                    razaSelect.innerHTML = '<option value="">No hay razas disponibles para esta especie</option>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                razaSelect.innerHTML = '<option value="">Error al cargar razas</option>';
             });
-        })
-        .catch(error => {
-            console.error('Error completo:', error); // Para debug
-            razaSelect.innerHTML = '<option value="">Error al cargar razas</option>';
-        });
     }
 
-    // Cargar razas si hay una especie seleccionada (para old values)
+    // Cargar razas al cargar la página si hay una especie seleccionada (por old() data)
     document.addEventListener('DOMContentLoaded', function() {
-        if (document.getElementById('especie_id').value) {
+        const especieSelect = document.getElementById('especie_id');
+        if (especieSelect.value) {
             loadRazas();
         }
     });
-</script>@endsection
+</script>
+@endsection
