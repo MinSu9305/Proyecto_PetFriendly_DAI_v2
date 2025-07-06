@@ -28,7 +28,7 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-500">Especie</p>
-                            <p class="font-medium">{{ $pet->type_in_spanish }}</p>
+                            <p class="font-medium">{{ $pet->raza && $pet->raza->especie ? $pet->raza->especie->nombre : 'Sin especie' }}</p>
                         </div>
                         <div>
                             <p class="text-sm text-gray-500">Raza</p>

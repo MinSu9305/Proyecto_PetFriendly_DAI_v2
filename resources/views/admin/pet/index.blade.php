@@ -60,7 +60,8 @@
                 <tr class="hover:bg-gray-50">
                     <td class="px-6 py-4 text-gray-900 font-medium">{{ $pet->name }}</td>
                     <td class="px-6 py-4 text-gray-900">{{ $pet->age }} {{ $pet->age == 1 ? 'año' : 'años' }}</td>
-<td class="px-6 py-4 text-gray-900">{{ $pet->raza && $pet->raza->especie ? $pet->raza->especie->nombre : 'Sin especie' }}</td>                    <td class="px-6 py-4 text-gray-900">{{ $pet->raza ? $pet->raza->nombre : 'Sin raza' }}</td>
+                    <td class="px-6 py-4 text-gray-900">{{ $pet->raza && $pet->raza->especie ? $pet->raza->especie->nombre : 'Sin especie' }}</td>                    
+                    <td class="px-6 py-4 text-gray-900">{{ $pet->raza ? $pet->raza->nombre : 'Sin raza' }}</td>
                     <td class="px-6 py-4 text-gray-900">{{ $pet->gender_in_spanish }}</td>
                     <td class="px-6 py-4 text-center">
                         <div class="flex justify-center space-x-2">
