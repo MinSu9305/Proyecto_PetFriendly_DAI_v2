@@ -18,7 +18,7 @@ class RazaController extends Controller
         })
         ->orderBy('especie')
         ->orderBy('nombre')
-        ->paginate(10);
+        ->paginate(5);
 
         return view('admin.razas.index', compact('razas', 'search'));
     }

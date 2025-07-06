@@ -25,7 +25,7 @@ class AdoptionRequestController extends Controller
                 });
             })
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(5);
 
         return view('admin.adoption-requests.index', compact('adoptionRequests', 'search'));
     }

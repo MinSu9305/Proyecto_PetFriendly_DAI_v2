@@ -21,7 +21,7 @@ class DonationController extends Controller
                            ->orWhere('amount', 'like', "%{$search}%");
             })
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(5);
 
         return view('admin.donations.index', compact('donations', 'search'));
     }

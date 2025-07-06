@@ -16,7 +16,7 @@ class DonationController extends Controller
     {
         $donations = Donation::where('user_id', Auth::id())
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(5);
             
         return view('user.donations.index', compact('donations'));
     }

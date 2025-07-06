@@ -42,7 +42,7 @@ class DashboardController extends Controller
         // Lista las mascotas con adopciones aprobadas
         $mascotas = Pet::with('approvedAdoption.user')
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(5);
 
         return view('admin.mascotas', compact('mascotas'));
     }
@@ -51,14 +51,14 @@ class DashboardController extends Controller
     {
         $solicitudes = AdoptionRequest::with(['user', 'pet'])
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(5);
 
         return view('admin.adoption-requests', compact('solicitudes'));
     }
 //Muestra las donaciones
     public function donaciones()
     {
-        $donations = Donation::with('user')->orderBy('created_at', 'desc')->paginate(10);
+        $donations = Donation::with('user')->orderBy('created_at', 'desc')->paginate(5);
 
         return view('admin.donations.index', compact('donations'));
     }
