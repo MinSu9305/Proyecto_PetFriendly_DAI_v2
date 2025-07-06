@@ -55,14 +55,19 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/adoptantes/{user}/view', [DashboardController::class, 'viewAdoptante'])->name('adoptantes.view');
     Route::delete('/adoptantes/{user}/delete', [DashboardController::class, 'deleteAdoptante'])->name('adoptantes.delete');
 
-    // Rutas para Razas
+    // Rutas para Especies
+    Route::resource('especies', App\Http\Controllers\Admin\EspecieController::class);
+    
+    // Rutas para Razas (actualizar para usar especies)
     Route::resource('razas', App\Http\Controllers\Admin\RazaController::class);
-
-    // Ruta AJAX para obtener razas por especie
-    Route::get('pets/razas-by-especie', [App\Http\Controllers\Admin\PetController::class, 'getRazasByEspecie'])
-         ->name('pets.getRazasByEspecie');
-
+    
+    // Rutas para Pets
     Route::resource('pets', App\Http\Controllers\Admin\PetController::class);
+    
+    // Cambiar el parámetro de la ruta AJAX
+    Route::get('pets/razas-by-especie', [App\Http\Controllers\Admin\PetController::class, 'getRazasByEspecie'])
+     ->name('pets.getRazasByEspecie');
+        
 });
 
 

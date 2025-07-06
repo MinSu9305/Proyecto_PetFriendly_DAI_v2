@@ -34,16 +34,19 @@
                 </div>
 
                 <!-- Especie -->
-                <div>
-                    <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Especie</label>
-                    <select name="type" id="type" onchange="loadRazas()" 
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                        <option value="">Seleccionar...</option>
-                        <option value="dog" {{ old('type', $pet->type) == 'dog' ? 'selected' : '' }}>Perro</option>
-                        <option value="cat" {{ old('type', $pet->type) == 'cat' ? 'selected' : '' }}>Gato</option>
-                    </select>
-                    @error('type') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                </div>
+<div>
+    <label for="especie_id" class="block text-sm font-medium text-gray-700 mb-1">Especie</label>
+    <select name="especie_id" id="especie_id" onchange="loadRazas()" 
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+        <option value="">Seleccionar...</option>
+        @foreach($especies as $especie)
+            <option value="{{ $especie->id }}" {{ old('especie_id', $pet->especie_id) == $especie->id ? 'selected' : '' }}>
+                {{ $especie->nombre }}
+            </option>
+        @endforeach
+    </select>
+    @error('especie_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+</div>
 
                 <!-- Sexo -->
                 <div>
@@ -58,21 +61,15 @@
                 </div>
 
                 <!-- Raza -->
-                <div>
-                    <label for="raza_id" class="block text-sm font-medium text-gray-700 mb-1">Raza</label>
-                    <select name="raza_id" id="raza_id" 
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                        <option value="">Seleccionar raza...</option>
-                        @foreach($razas as $raza)
-                            <option value="{{ $raza->id }}" 
-                                    data-especie="{{ $raza->especie }}"
-                                    {{ old('raza_id', $pet->raza_id) == $raza->id ? 'selected' : '' }}>
-                                {{ $raza->nombre }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('raza_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                </div>
+<div>
+    <label for="raza_id" class="block text-sm font-medium text-gray-700 mb-1">Raza</label>
+    <select name="raza_id" id="raza_id" 
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+        <option value="">Seleccionar raza...</option>
+        <!-- Las opciones se cargarán dinámicamente -->
+    </select>
+    @error('raza_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+</div>
 
                 <!-- Tamaño -->
                 <div>
@@ -168,22 +165,22 @@
         }
     }
 
-    function loadRazas() {
-        const typeSelect = document.getElementById('type');
+function loadRazas() {
+        const especieSelect = document.getElementById('especie_id');
         const razaSelect = document.getElementById('raza_id');
-        const selectedType = typeSelect.value;
+        const selectedEspecie = especieSelect.value;
         const currentRazaId = '{{ old("raza_id", $pet->raza_id) }}';
         
         // Limpiar opciones de raza
         razaSelect.innerHTML = '<option value="">Cargando razas...</option>';
         
-        if (!selectedType) {
+        if (!selectedEspecie) {
             razaSelect.innerHTML = '<option value="">Primero selecciona una especie...</option>';
             return;
         }
         
         // Hacer petición AJAX para obtener razas
-        fetch(`{{ route('admin.pets.getRazasByEspecie') }}?type=${selectedType}`)
+        fetch(`{{ url('admin/pets/razas-by-especie') }}?especie_id=${selectedEspecie}`)
             .then(response => response.json())
             .then(data => {
                 razaSelect.innerHTML = '<option value="">Seleccionar raza...</option>';
@@ -209,7 +206,7 @@
 
     // Cargar razas al cargar la página
     document.addEventListener('DOMContentLoaded', function() {
-        if (document.getElementById('type').value) {
+        if (document.getElementById('especie_id').value) {
             loadRazas();
         }
     });

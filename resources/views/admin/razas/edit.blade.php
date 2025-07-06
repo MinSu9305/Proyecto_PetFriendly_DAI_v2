@@ -45,6 +45,13 @@
                     <span>Mascotas</span>
                 </a>
 
+                <!-- Especies -->
+                <a href="{{ route('admin.especies.index') }}"
+                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Especies</span>
+                </a>
+
                 <!-- Razas -->
                 <a href="{{ route('admin.razas.index') }}"
                     class="flex items-center space-x-3 px-4 py-3 bg-pet-yellow text-black font-semibold rounded-lg">
@@ -103,21 +110,21 @@
                     @csrf
                     @method('PUT')
                     
-                    <!-- Especie -->
-                    <div class="mb-6">
-                        <label for="especie" class="block text-sm font-medium text-gray-700 mb-2">
-                            Especie
-                        </label>
-                        <select name="especie" id="especie" 
-                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none @error('especie') border-red-500 @enderror">
-                            <option value="">Seleccionar especie</option>
-                            <option value="Perro" {{ (old('especie', $raza->especie) == 'Perro') ? 'selected' : '' }}>Perro</option>
-                            <option value="Gato" {{ (old('especie', $raza->especie) == 'Gato') ? 'selected' : '' }}>Gato</option>
-                        </select>
-                        @error('especie')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
+                   <!-- Especie -->
+<div class="mb-4">
+    <label for="especie_id" class="block text-sm font-medium text-gray-700 mb-2">Especie</label>
+    <select name="especie_id" id="especie_id" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+        <option value="">Seleccionar especie</option>
+        @foreach($especies as $especie)
+            <option value="{{ $especie->id }}" {{ ($raza->especie_id == $especie->id || old('especie_id') == $especie->id) ? 'selected' : '' }}>
+                {{ $especie->nombre }}
+            </option>
+        @endforeach
+    </select>
+    @error('especie_id')
+        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+    @enderror
+</div>
 
                     <!-- Nombre de la raza -->
                     <div class="mb-6">

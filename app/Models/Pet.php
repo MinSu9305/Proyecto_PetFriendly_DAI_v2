@@ -11,7 +11,7 @@ class Pet extends Model
 
     protected $fillable = [
         'name',
-        'type',
+        'especie_id', // Nuevo campo
         'raza_id',
         'age',
         'size',
@@ -19,17 +19,24 @@ class Pet extends Model
         'description',
         'images',
         'status',
-        //'is_vaccinated',
+       // 'is_vaccinated',
         //'is_sterilized',
         //'medical_notes',
     ];
 
     protected $casts = [
         'images' => 'array',
-        //'is_vaccinated' => 'boolean',
-        //'is_sterilized' => 'boolean',
+      //  'is_vaccinated' => 'boolean',
+       // 'is_sterilized' => 'boolean',
     ];
 
+    // Relación con especie
+    public function especie()
+    {
+        return $this->belongsTo(Especie::class, 'especie_id');
+    }
+
+    // Relación con raza
     public function raza()
     {
         return $this->belongsTo(Raza::class);
@@ -43,16 +50,6 @@ class Pet extends Model
     public function approvedAdoption()
     {
         return $this->hasOne(AdoptionRequest::class)->where('status', 'approved');
-    }
-
-    public function getTypeInSpanishAttribute()
-    {
-        return match($this->type) {
-            'dog' => 'Perro',
-            'cat' => 'Gato',
-            //'other' => 'Otro',
-            default => $this->type,
-        };
     }
 
     public function getSizeInSpanishAttribute()

@@ -45,6 +45,13 @@
                     <span>Mascotas</span>
                 </a>
 
+                <!-- Especies -->
+                <a href="{{ route('admin.especies.index') }}"
+                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Especies</span>
+                </a>
+                                
                 <!-- Razas -->
                 <a href="{{ route('admin.razas.index') }}"
                     class="flex items-center space-x-3 px-4 py-3 bg-pet-yellow text-black font-semibold rounded-lg">
@@ -134,7 +141,8 @@
                         @forelse($razas as $raza)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-6 py-4 text-gray-900 font-medium">{{ $raza->nombre }}</td>
-                                <td class="px-6 py-4 text-gray-900">{{ $raza->especie }}</td>
+                                <!-- Cambiar esta línea -->
+                                <td class="px-6 py-4 text-gray-900">{{ $raza->especie ? $raza->especie->nombre : 'Sin especie' }}</td>
                                 <td class="px-6 py-4 text-gray-900">{{ Str::limit($raza->descripcion, 50) }}</td>
                                 <td class="px-6 py-4 text-center">
                                     <div class="flex justify-center space-x-2">

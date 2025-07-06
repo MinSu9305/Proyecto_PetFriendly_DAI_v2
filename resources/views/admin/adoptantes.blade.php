@@ -59,6 +59,13 @@
                     <span>Mascotas</span>
                 </a>
 
+                <!-- Especies -->
+                <a href="{{ route('admin.especies.index') }}"
+                    class="flex items-center space-x-3 px-4 py-3 {{ request()->routeIs('admin.especies.*') ? 'bg-pet-yellow text-black font-semibold' : 'text-gray-700 hover:bg-gray-100' }} rounded-lg">
+                    <i class="fas fa-layer-group"></i>
+                    <span>Especies</span>
+                </a>
+
                 <!-- Razas -->
                 <a href="{{ route('admin.razas.index') }}"
                     class ="flex items-center space-x-3 px-4 py-3 {{ request()->routeIs('admin.razas.*') ? 'bg-pet-yellow text-black font-semibold' : 'text-gray-700 hover:bg-gray-100' }} rounded-lg">

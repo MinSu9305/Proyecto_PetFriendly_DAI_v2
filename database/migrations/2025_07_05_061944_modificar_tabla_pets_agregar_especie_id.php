@@ -6,24 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
         Schema::table('pets', function (Blueprint $table) {
-            $table->dropColumn('is_vaccinated');
+            // Agregar la foreign key a especies
+            $table->unsignedBigInteger('especie_id')->after('id');
+            $table->foreign('especie_id')->references('id')->on('especies')->onDelete('cascade');
+            
+            // Mantener temporalmente el campo type para migración
         });
     }
 
-
-    /**
-     * Reverse the migrations.
-     */
     public function down()
     {
         Schema::table('pets', function (Blueprint $table) {
-            $table->boolean('is_vaccinated')->default(false);
+            $table->dropForeign(['especie_id']);
+            $table->dropColumn('especie_id');
         });
     }
 };

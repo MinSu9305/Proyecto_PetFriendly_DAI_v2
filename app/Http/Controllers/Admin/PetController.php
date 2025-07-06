@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pet;
-use App\Models\Raza; // Agregar import
+use App\Models\Raza; 
+use App\Models\Especie; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -44,8 +45,8 @@ class PetController extends Controller
      */
     public function create()
     {
-        $razas = Raza::orderBy('especie')->orderBy('nombre')->get();
-        return view('admin.pet.create', compact('razas'));
+        $especies = Especie::orderBy('nombre')->get();
+        return view('admin.pet.create', compact('especies'));
     }
 
     /**
@@ -55,7 +56,7 @@ class PetController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|min:2|max:255',
-            'type' => 'required|in:dog,cat',
+            'especie_id' => 'required|exists:especies,id', // Cambiar de type a especie_id
             'raza_id' => 'required|exists:razas,id', // Cambiado de breed a raza_id
             'age' => 'required|integer|min:0|max:20',
             'size' => 'required|in:small,medium,large',
@@ -67,7 +68,7 @@ class PetController extends Controller
         ], [
             'name.required' => 'El nombre es requerido',
             'name.min' => 'El nombre debe tener al menos 2 caracteres',
-            'type.required' => 'La especie es requerida',
+            'especie_id.required' => 'La especie es requerida',
             'raza_id.required' => 'La raza es requerida',
             'raza_id.exists' => 'La raza seleccionada no es válida',
             'age.required' => 'La edad es requerida',
@@ -84,7 +85,7 @@ class PetController extends Controller
 
         $data = [
             'name' => $validated['name'],
-            'type' => $validated['type'],
+            'especie_id' => $validated['especie_id'],
             'raza_id' => $validated['raza_id'], // Cambiado de breed a raza_id
             'age' => $validated['age'],
             'size' => $validated['size'],
@@ -121,11 +122,10 @@ class PetController extends Controller
      */
     public function edit(Pet $pet)
     {
-        $razas = Raza::orderBy('especie')->orderBy('nombre')->get();
-        $pet->load('raza'); // Cargar la relación
-        return view('admin.pet.edit', compact('pet', 'razas'));
+        $especies = Especie::orderBy('nombre')->get();
+        $pet->load('especie', 'raza');
+        return view('admin.pet.edit', compact('pet', 'especies'));
     }
-
     /**
      * Actualiza los datos de una mascota. Similar al método store 
      */
@@ -133,7 +133,7 @@ class PetController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|min:2|max:255',
-            'type' => 'required|in:dog,cat',
+            'especie_id' => 'required|exists:especies,id',
             'raza_id' => 'required|exists:razas,id', // Cambiado de breed a raza_id
             'age' => 'required|integer|min:0|max:20',
             'size' => 'required|in:small,medium,large',
@@ -146,7 +146,7 @@ class PetController extends Controller
         ], [
             'name.required' => 'El nombre es requerido',
             'name.min' => 'El nombre debe tener al menos 2 caracteres',
-            'type.required' => 'La especie es requerida',
+            'especie_id.required' => 'La especie es requerida',
             'raza_id.required' => 'La raza es requerida',
             'raza_id.exists' => 'La raza seleccionada no es válida',
             'age.required' => 'La edad es requerida',
@@ -164,7 +164,7 @@ class PetController extends Controller
 
         $data = [
             'name' => $validated['name'],
-            'type' => $validated['type'],
+            'especie_id' => $validated['especie_id'],
             'raza_id' => $validated['raza_id'], // Cambiado de breed a raza_id
             'age' => $validated['age'],
             'size' => $validated['size'],
@@ -191,24 +191,17 @@ class PetController extends Controller
     }
 
     /**
-     * Método para obtener razas por especie (AJAX)
+     * Método para obtener razas por especie (AJAX) - ACTUALIZADO
      */
     public function getRazasByEspecie(Request $request)
     {
-        $type = $request->get('type');
+        $especie_id = $request->get('especie_id'); // Cambiar de type a especie_id
         
-        // Convertir de inglés a español
-        $especieEspanol = match($type) {
-            'dog' => 'Perro',
-            'cat' => 'Gato',
-            default => null
-        };
-        
-        if (!$especieEspanol) {
+        if (!$especie_id) {
             return response()->json([]);
         }
         
-        $razas = Raza::where('especie', $especieEspanol)
+        $razas = Raza::where('especie_id', $especie_id)
                     ->orderBy('nombre')
                     ->get(['id', 'nombre']);
         

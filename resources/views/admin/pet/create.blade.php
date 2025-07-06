@@ -33,16 +33,19 @@
                 </div>
 
                 <!-- Especie -->
-                <div>
-                    <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Especie</label>
-                    <select name="type" id="type" onchange="loadRazas()" 
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                        <option value="">Seleccionar...</option>
-                        <option value="dog" {{ old('type') == 'dog' ? 'selected' : '' }}>Perro</option>
-                        <option value="cat" {{ old('type') == 'cat' ? 'selected' : '' }}>Gato</option>
-                    </select>
-                    @error('type') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                </div>
+<div>
+    <label for="especie_id" class="block text-sm font-medium text-gray-700 mb-1">Especie</label>
+    <select name="especie_id" id="especie_id" onchange="loadRazas()" 
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+        <option value="">Seleccionar...</option>
+        @foreach($especies as $especie)
+            <option value="{{ $especie->id }}" {{ old('especie_id') == $especie->id ? 'selected' : '' }}>
+                {{ $especie->nombre }}
+            </option>
+        @endforeach
+    </select>
+    @error('especie_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+</div>
 
                 <!-- Sexo -->
                 <div>
@@ -57,14 +60,14 @@
                 </div>
 
                 <!-- Raza -->
-                <div>
-                    <label for="raza_id" class="block text-sm font-medium text-gray-700 mb-1">Raza</label>
-                    <select name="raza_id" id="raza_id" 
-                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
-                        <option value="">Primero selecciona una especie...</option>
-                    </select>
-                    @error('raza_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-                </div>
+<div>
+    <label for="raza_id" class="block text-sm font-medium text-gray-700 mb-1">Raza</label>
+    <select name="raza_id" id="raza_id" 
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none">
+        <option value="">Primero selecciona una especie...</option>
+    </select>
+    @error('raza_id') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+</div>
 
                 <!-- Tamaño -->
                 <div>
@@ -148,48 +151,71 @@
     }
 
     function loadRazas() {
-        const typeSelect = document.getElementById('type');
+        const especieSelect = document.getElementById('especie_id'); // Cambiar de type a especie_id
         const razaSelect = document.getElementById('raza_id');
-        const selectedType = typeSelect.value;
+        const selectedEspecie = especieSelect.value;
+        
+        console.log('Especie seleccionada:', selectedEspecie); // Para debug
         
         // Limpiar opciones de raza
         razaSelect.innerHTML = '<option value="">Cargando razas...</option>';
         
-        if (!selectedType) {
+        if (!selectedEspecie) {
             razaSelect.innerHTML = '<option value="">Primero selecciona una especie...</option>';
             return;
         }
         
+        // Construir la URL correctamente
+        const url = `{{ url('admin/pets/razas-by-especie') }}?especie_id=${selectedEspecie}`; // Cambiar parámetro
+        console.log('URL de petición:', url); // Para debug
+        
         // Hacer petición AJAX para obtener razas
-        fetch(`{{ route('admin.pets.getRazasByEspecie') }}?type=${selectedType}`)
-            .then(response => response.json())
-            .then(data => {
-                razaSelect.innerHTML = '<option value="">Seleccionar raza...</option>';
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+        .then(response => {
+            console.log('Respuesta recibida:', response); // Para debug
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Datos recibidos:', data); // Para debug
+            razaSelect.innerHTML = '<option value="">Seleccionar raza...</option>';
+            
+            if (data.length === 0) {
+                razaSelect.innerHTML = '<option value="">No hay razas disponibles para esta especie</option>';
+                return;
+            }
+            
+            data.forEach(raza => {
+                const option = document.createElement('option');
+                option.value = raza.id;
+                option.textContent = raza.nombre;
                 
-                data.forEach(raza => {
-                    const option = document.createElement('option');
-                    option.value = raza.id;
-                    option.textContent = raza.nombre;
-                    
-                    // Mantener selección si hay old value
-                    if ('{{ old("raza_id") }}' == raza.id) {
-                        option.selected = true;
-                    }
-                    
-                    razaSelect.appendChild(option);
-                });
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                razaSelect.innerHTML = '<option value="">Error al cargar razas</option>';
+                // Mantener selección si hay old value
+                if ('{{ old("raza_id") }}' == raza.id) {
+                    option.selected = true;
+                }
+                
+                razaSelect.appendChild(option);
             });
+        })
+        .catch(error => {
+            console.error('Error completo:', error); // Para debug
+            razaSelect.innerHTML = '<option value="">Error al cargar razas</option>';
+        });
     }
 
-    // Cargar razas si hay un tipo seleccionado (para old values)
+    // Cargar razas si hay una especie seleccionada (para old values)
     document.addEventListener('DOMContentLoaded', function() {
-        if (document.getElementById('type').value) {
+        if (document.getElementById('especie_id').value) {
             loadRazas();
         }
     });
-</script>
-@endsection
+</script>@endsection

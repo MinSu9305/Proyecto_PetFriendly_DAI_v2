@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>PetFriendly - Agregar Raza</title>
+    <title>PetFriendly - Editar Especie</title>
     <link rel="icon" href="/images/LogoPag.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -19,8 +19,8 @@
 
 <body class="bg-gray-50 font-sans">
     <div class="flex min-h-screen">
-        <!-- Sidebar -->
-        <div class="w-64 bg-white shadow-lg relative">
+        <!-- Sidebar (igual que en create) -->
+        <div class="w-64 bg-white shadow-lg">
             <!-- Logo -->
             <div class="p-6 border-b border-gray-200">
                 <div class="flex items-center space-x-3">
@@ -47,14 +47,14 @@
 
                 <!-- Especies -->
                 <a href="{{ route('admin.especies.index') }}"
-                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    class="flex items-center space-x-3 px-4 py-3 bg-pet-yellow text-black font-semibold rounded-lg">
                     <i class="fas fa-layer-group"></i>
                     <span>Especies</span>
                 </a>
 
                 <!-- Razas -->
                 <a href="{{ route('admin.razas.index') }}"
-                    class="flex items-center space-x-3 px-4 py-3 bg-pet-yellow text-black font-semibold rounded-lg">
+                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
                     <i class="fas fa-dna"></i>
                     <span>Razas</span>
                 </a>
@@ -74,25 +74,24 @@
                 </a>
             </nav>
 
-            <!-- Boton para salir -->
-            <div class="absolute bottom-6 left-0 right-0 px-4">
-                <form method="POST" action="{{ route('logout') }}" id="logout-form">
+            <!-- Botón para salir -->
+            <div class="absolute bottom-6 left-4 right-4">
+                <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                    <button type="submit" 
-                        onclick="this.disabled=true; this.form.submit();" 
-                        class="flex items-center space-x-3 px-4 py-3 bg-black text-white rounded-lg transition-colors duration-200 font-medium w-full">
-                        <i class="fas fa-sign-out-alt w-5 text-center text-white"></i>
+                    <button type="submit"
+                        class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg w-full">
+                        <i class="fas fa-sign-out-alt"></i>
                         <span>Salir</span>
                     </button>
                 </form>
-            </div> 
+            </div>
         </div>
 
         <!-- Contenido principal -->
         <div class="flex-1 p-8">
             <!-- Botón volver -->
             <div class="mb-6">
-                <a href="{{ route('admin.razas.index') }}" 
+                <a href="{{ route('admin.especies.index') }}" 
                    class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors">
                     <i class="fas fa-arrow-left mr-2"></i>
                     Volver
@@ -101,38 +100,23 @@
 
             <!-- Header -->
             <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-900">Agregar Raza</h1>
+                <h1 class="text-3xl font-bold text-gray-900">Editar Especie</h1>
             </div>
 
             <!-- Formulario -->
             <div class="bg-white rounded-lg shadow p-6 max-w-2xl">
-                <form action="{{ route('admin.razas.store') }}" method="POST">
+                <form action="{{ route('admin.especies.update', $especie) }}" method="POST">
                     @csrf
+                    @method('PUT')
                     
-<!-- Especie -->
-<div class="mb-6">
-    <label for="especie_id" class="block text-sm font-medium text-gray-700 mb-2">Especie</label>
-    <select name="especie_id" id="especie_id" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" required>
-        <option value="">Seleccionar especie</option>
-        @foreach($especies as $especie)
-            <option value="{{ $especie->id }}" {{ old('especie_id') == $especie->id ? 'selected' : '' }}>
-                {{ $especie->nombre }}
-            </option>
-        @endforeach
-    </select>
-    @error('especie_id')
-        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-    @enderror
-</div>
-
-                    <!-- Nombre de la raza -->
+                    <!-- Nombre de la especie -->
                     <div class="mb-6">
                         <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">
-                            Nombre de la raza
+                            Nombre de la especie
                         </label>
-                        <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}"
+                        <input type="text" name="nombre" id="nombre" value="{{ old('nombre', $especie->nombre) }}"
                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none @error('nombre') border-red-500 @enderror"
-                               placeholder="Ej: Labrador, Siamés">
+                               placeholder="Ej: Perro, Gato, Conejo">
                         @error('nombre')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -145,7 +129,7 @@
                         </label>
                         <textarea name="descripcion" id="descripcion" rows="4"
                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none @error('descripcion') border-red-500 @enderror"
-                                  placeholder="Describe las características de la raza...">{{ old('descripcion') }}</textarea>
+                                  placeholder="Describe las características generales de esta especie...">{{ old('descripcion', $especie->descripcion) }}</textarea>
                         @error('descripcion')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -158,7 +142,7 @@
                             <i class="fas fa-save mr-2"></i>
                             Guardar
                         </button>
-                        <a href="{{ route('admin.razas.index') }}"
+                        <a href="{{ route('admin.especies.index') }}"
                            class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg">
                             Cancelar
                         </a>
