@@ -63,17 +63,27 @@ class DashboardController extends Controller
         return view('admin.donations.index', compact('donations'));
     }
 //datos de un adoptante en detalle
-    public function viewAdoptante(User $user)
-    {
-        $adoptionRequests = $user->adoptionRequests()->with('pet')->get();
-        $donations = $user->donations()->get();
-
-        return response()->json([
-            'user' => $user,
-            'adoptionRequests' => $adoptionRequests,
-            'donations' => $donations,
-        ]);
-    }
+    // Método mejorado (opcional)
+public function viewAdoptante(User $user)
+{
+    $adoptionRequests = $user->adoptionRequests()->with('pet')->get();
+    $donations = $user->donations()->get();
+    
+    return response()->json([
+        'user' => [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'birth_date' => $user->birth_date,
+            'profile_photo_path' => $user->profile_photo_path, 
+            'role' => $user->role,
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at,
+        ],
+        'adoptionRequests' => $adoptionRequests,
+        'donations' => $donations,
+    ]);
+}
     public function deleteAdoptante(User $user)
     {
         //Elimina un adoptante del sistema, con validación para no eliminar admins

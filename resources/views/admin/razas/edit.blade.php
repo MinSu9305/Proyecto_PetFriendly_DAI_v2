@@ -20,34 +20,38 @@
 <body class="bg-gray-50 font-sans">
     <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <div class="w-64 bg-white shadow-lg relative">
+        <div class="w-64 bg-black shadow-lg relative">
             <!-- Logo -->
             <div class="p-6 border-b border-gray-200">
                 <div class="flex items-center space-x-3">
-                    <img src="/images/sloganphoto.png" alt="Logo Pet Friendly" class="w-10 h-10 object-contain">
-                    <span class="text-xl font-bold text-gray-900">Pet Friendly</span>
+                    <img src="/images/icono.png" alt="Logo Pet Friendly" class="w-10 h-10 object-contain">
+                    <div class="flex flex-col"> <!-- Contenedor para texto en columna -->
+                        <span class="text-xl font-bold text-white">Pet Friendly</span>
+                        <span class="text-sm text-gray-300">Administrador</span> <!-- Texto añadido -->
+                    </div>
                 </div>
             </div>
+
 
             <!-- Navegación -->
             <nav class="p-4 space-y-2">
                 <!-- Adoptantes -->
                 <a href="{{ route('admin.adoptantes') }}"
-                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    class="flex items-center space-x-3 px-4 py-3 text-white hover:bg-yellow-100 hover:bg-opacity-50 rounded-lg">
                     <i class="fas fa-users"></i>
                     <span>Adoptantes</span>
                 </a>
 
                 <!-- Mascotas -->
                 <a href="{{ route('admin.pets.index') }}"
-                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    class="flex items-center space-x-3 px-4 py-3 text-white hover:bg-yellow-100 hover:bg-opacity-50 rounded-lg">
                     <i class="fas fa-paw"></i>
                     <span>Mascotas</span>
                 </a>
 
                 <!-- Especies -->
                 <a href="{{ route('admin.especies.index') }}"
-                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    class="flex items-center space-x-3 px-4 py-3 text-white hover:bg-yellow-100 hover:bg-opacity-50 rounded-lg">
                     <i class="fas fa-layer-group"></i>
                     <span>Especies</span>
                 </a>
@@ -61,14 +65,14 @@
 
                 <!-- Solicitudes -->
                 <a href="{{ route('admin.adoption-requests.index') }}"
-                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    class="flex items-center space-x-3 px-4 py-3 text-white hover:bg-yellow-100 hover:bg-opacity-50 rounded-lg">
                     <i class="fas fa-file-alt"></i>
                     <span>Solicitudes</span>
                 </a>
 
                 <!-- Donaciones -->
                 <a href="{{ route('admin.donations.index') }}"
-                    class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg">
+                    class="flex items-center space-x-3 px-4 py-3 text-white hover:bg-yellow-100 hover:bg-opacity-50 rounded-lg">
                     <i class="fas fa-heart"></i>
                     <span>Donaciones</span>
                 </a>
@@ -80,8 +84,8 @@
                     @csrf
                     <button type="submit" 
                         onclick="this.disabled=true; this.form.submit();" 
-                        class="flex items-center space-x-3 px-4 py-3 bg-black text-white rounded-lg transition-colors duration-200 font-medium w-full">
-                        <i class="fas fa-sign-out-alt w-5 text-center text-white"></i>
+                        class="flex items-center space-x-3 px-4 py-3 bg-pet-yellow text-black rounded-lg transition-colors duration-200 font-medium w-full">
+                        <i class="fas fa-sign-out-alt w-5 text-center text-black"></i>
                         <span>Salir</span>
                     </button>
                 </form>
