@@ -20,7 +20,7 @@
 <body class="bg-gray-50 font-sans">
     <div class="flex min-h-screen">
         <!-- Sidebar (igual que en create) -->
-        <div class="w-64 bg-black shadow-lg">
+        <div class="w-64 bg-black shadow-lg relative">
             <!-- Logo -->
             <div class="p-6 border-b border-gray-200">
                 <div class="flex items-center space-x-3">
@@ -79,16 +79,18 @@
             </nav>
 
             <!-- Botón para salir -->
-            <div class="absolute bottom-6 left-4 right-4">
-                <form method="POST" action="{{ route('logout') }}">
+            <!-- Botón Salir editado -->
+            <div class="absolute bottom-6 left-0 right-0 px-4">
+                <form method="POST" action="{{ route('logout') }}" id="logout-form">
                     @csrf
-                    <button type="submit"
+                    <button type="submit" 
+                        onclick="this.disabled=true; this.form.submit();" 
                         class="flex items-center space-x-3 px-4 py-3 bg-pet-yellow text-black rounded-lg transition-colors duration-200 font-medium w-full">
                         <i class="fas fa-sign-out-alt w-5 text-center text-black"></i>
                         <span>Salir</span>
                     </button>
                 </form>
-            </div>
+            </div>  
         </div>
 
         <!-- Contenido principal -->
