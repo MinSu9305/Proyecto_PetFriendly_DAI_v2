@@ -83,7 +83,7 @@ Route::middleware(['auth'])->name('user.')->group(function () {
     
 // Donaciones USER
     Route::get('/donations', [UserDonationController::class, 'index'])->name('donations.index');
-    Route::get('/donations/create', [UserDonationController::class, 'create'])->name('donations.create');
+    //Route::get('/donations/create', [UserDonationController::class, 'create'])->name('donations.create');
     Route::post('/donations', [UserDonationController::class, 'store'])->name('donations.store');
     Route::get('/donations/{donation}/certificate', [UserDonationController::class, 'downloadCertificate'])->name('donations.certificate'); // Esta será user.donations.certificate
     });

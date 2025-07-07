@@ -24,35 +24,45 @@ class DonationController extends Controller
     /**
      * Muestra el formulario para hacer una nueva donación
      */
-    public function create()
-    {
-        return view('user.donations.create');
-    }
+    //public function create()
+    //{
+    //    return view('user.donations.create');
+    //}
 
     /**
      * Guarda una nueva donación en la base de datos:
      */
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'amount' => 'required|numeric|min:1',
-            'message' => 'nullable|string',
-        ]);
-        
-        $user = Auth::user();
-        
-        $donation = Donation::create([
-            'user_id' => $user->id,
-            'donor_name' => $user->name,
-            'donor_email' => $user->email,
-            'amount' => $validated['amount'],
-            'status' => 'completed', // Simulamos que el pago fue exitoso
-            'transaction_id' => 'SIMULATED-' . uniqid(),
-            'message' => $validated['message'] ?? null,
-        ]);
-        
-        return redirect()->route('user.donations.index')->with('success', 'Donación realizada con éxito. ¡Gracias por tu aporte!');
+{
+    $validated = $request->validate([
+        'amount' => 'required|numeric|min:1',
+        'first_name' => 'required|string|max:255',
+        'last_name' => 'required|string|max:255',
+        'message' => 'nullable|string',
+        'receipt' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120', // 5MB
+    ]);
+    
+    $user = Auth::user();
+    
+    // Manejar subida de comprobante
+    $receiptPath = null;
+    if ($request->hasFile('receipt')) {
+        $receiptPath = $request->file('receipt')->store('receipts', 'public');
     }
+    
+    $donation = Donation::create([
+        'user_id' => $user->id,
+        'donor_name' => $validated['first_name'] . ' ' . $validated['last_name'],
+        'donor_email' => $user->email,
+        'amount' => $validated['amount'],
+        'status' => 'completed',
+        'transaction_id' => 'SIMULATED-' . uniqid(),
+        'message' => $validated['message'] ?? null,
+        'receipt_path' => $receiptPath, // Nuevo campo para el comprobante
+    ]);
+    
+    return redirect()->route('user.donations.index')->with('success', 'Donación realizada con éxito. ¡Gracias por tu aporte!');
+}
 
     /**
      * Genera un PDF descargable de certificado
