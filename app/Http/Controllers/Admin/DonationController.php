@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Donation;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf as PDF; //Librería DomPDF usada para generar archivos PDF desde vistas Blade.
+use Illuminate\Support\Facades\Storage;
 
 //Este controlador va a gestionar las donaciones realizadas y además generar certificados en PDF
 class DonationController extends Controller
@@ -60,5 +61,20 @@ class DonationController extends Controller
         
         // Descargar el PDF
         return $pdf->download('certificado-donacion-' . $donation->id . '.pdf');
+    }
+/**
+     * Ver/descargar el comprobante subido por el usuario
+     */
+    public function viewReceipt(Donation $donation)
+    {
+        // Verificar que existe el comprobante
+        if (!$donation->receipt_path || !Storage::disk('public')->exists($donation->receipt_path)) {
+            return redirect()->back()->with('error', 'Comprobante no encontrado');
+        }
+        
+        $filePath = storage_path('app/public/' . $donation->receipt_path);
+        $fileName = 'comprobante-donacion-' . $donation->id . '.' . pathinfo($donation->receipt_path, PATHINFO_EXTENSION);
+        
+        return response()->download($filePath, $fileName);
     }
 }

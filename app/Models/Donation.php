@@ -10,14 +10,15 @@ class Donation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
-        'donor_name',
-        'donor_email',
-        'amount',
-        'status',
-        'transaction_id',
-        'message',
-    ];
+    'user_id',
+    'donor_name', 
+    'donor_email',
+    'amount',
+    'status',
+    'transaction_id',
+    'message',
+    'receipt_path' // Asegurar que esté incluido
+];
 
     protected $casts = [
         'amount' => 'decimal:2',

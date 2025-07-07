@@ -5,7 +5,7 @@ use App\Http\Controllers\Auth\CustomAuthController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PetController;
 use App\Http\Controllers\Admin\AdoptionRequestController;
-use App\Http\Controllers\Admin\DonationController;
+use App\Http\Controllers\Admin\DonationController as AdminDonationController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\PetController as UserPetController;
 use App\Http\Controllers\User\DonationController as UserDonationController;
@@ -41,11 +41,13 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::resource('adoption-requests', AdoptionRequestController::class);
     Route::post('/adoption-requests/{adoptionRequest}/process', [AdoptionRequestController::class, 'process'])->name('adoption-requests.process');
     
-// Rutas de donaciones ADMIN
-    Route::get('/donations', [DonationController::class, 'index'])->name('donations.index');
-    Route::get('/donations/{donation}', [DonationController::class, 'show'])->name('donations.show');
-    Route::get('/donations/{donation}/certificate', [DonationController::class, 'generateCertificate'])->name('donations.certificate');
-        
+// *** RUTAS DE DONACIONES ADMIN - CORREGIDAS ***
+    Route::get('/donations', [AdminDonationController::class, 'index'])->name('donations.index');
+    Route::get('/donations/{donation}', [AdminDonationController::class, 'show'])->name('donations.show');
+    Route::get('/donations/{donation}/certificate', [AdminDonationController::class, 'generateCertificate'])->name('donations.certificate');
+    Route::get('/donations/{donation}/receipt', [AdminDonationController::class, 'viewReceipt'])->name('donations.receipt');
+    
+    
     Route::get('/solicitudes', [DashboardController::class, 'solicitudes'])->name('solicitudes');
     Route::get('/donaciones', [DashboardController::class, 'donaciones'])->name('donaciones');
     
@@ -81,11 +83,11 @@ Route::middleware(['auth'])->name('user.')->group(function () {
     Route::get('/pets/{pet}/adoption-form', [UserPetController::class, 'adoptionForm'])->name('pets.adoption-form');
     Route::post('/pets/{pet}/adoption', [UserPetController::class, 'submitAdoption'])->name('pets.submit-adoption');
     
-// Donaciones USER
+// *** RUTAS DE DONACIONES USER - CORREGIDAS ***
     Route::get('/donations', [UserDonationController::class, 'index'])->name('donations.index');
-    //Route::get('/donations/create', [UserDonationController::class, 'create'])->name('donations.create');
+    Route::get('/donations/create', [UserDonationController::class, 'create'])->name('donations.create');
     Route::post('/donations', [UserDonationController::class, 'store'])->name('donations.store');
-    Route::get('/donations/{donation}/certificate', [UserDonationController::class, 'downloadCertificate'])->name('donations.certificate'); // Esta será user.donations.certificate
-    });
-
+    Route::get('/donations/{donation}', [UserDonationController::class, 'show'])->name('donations.show');
+    Route::get('/donations/{donation}/certificate', [UserDonationController::class, 'generateCertificate'])->name('donations.certificate');
+});
 require __DIR__.'/auth.php';
