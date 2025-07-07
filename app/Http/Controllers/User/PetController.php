@@ -3,6 +3,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pet;
+use App\Models\Especie;
 use App\Models\AdoptionRequest;
 use App\Models\User;
 use Illuminate\Http\Request;

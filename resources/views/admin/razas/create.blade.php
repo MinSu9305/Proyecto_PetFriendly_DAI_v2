@@ -96,7 +96,7 @@
             <!-- Botón volver -->
             <div class="mb-6">
                 <a href="{{ route('admin.razas.index') }}" 
-                   class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors">
+                   class="inline-flex items-center px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-700 rounded-lg transition-colors">
                     <i class="fas fa-arrow-left mr-2"></i>
                     Volver
                 </a>

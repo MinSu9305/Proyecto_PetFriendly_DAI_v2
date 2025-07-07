@@ -27,4 +27,5 @@ class Especie extends Model
     {
         return $this->hasMany(Pet::class, 'especie_id');
     }
+    
 }

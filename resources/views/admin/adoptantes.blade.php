@@ -228,7 +228,7 @@
 <div id="viewModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
     <div class="bg-white rounded-lg p-0 max-w-2xl w-full mx-4 max-h-[90vh] overflow-hidden shadow-2xl">
         <!-- Encabezado con fondo amarillo -->
-        <div class="bg-yellow-500 px-6 py-4 flex justify-between items-center">
+        <div class="bg-yellow-400 px-6 py-4 flex justify-between items-center">
             <h3 class="text-2xl font-bold text-gray-900">Detalles del Adoptante</h3>
             <button onclick="closeModal()" class="text-gray-900 hover:text-black transition-colors">
                 <i class="fas fa-times text-xl"></i>

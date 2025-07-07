@@ -22,7 +22,7 @@
     <!-- Sidebar -->
     <div class="w-64 bg-amber-100 relative flex flex-col">
         <!-- Logo -->
-        <div class="p-6 bg-pet-yellow-dark border-b border-gray-200">
+        <div class="p-6 bg-pet-yellow border-b border-gray-200">
             <div class="flex items-center space-x-3">
                 <img src="/images/sloganphoto.png" alt="Logo Pet Friendly" class="w-10 h-10 object-contain">
                 <span class="text-xl font-bold text-gray-900">Pet Friendly</span>

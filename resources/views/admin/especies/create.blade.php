@@ -93,68 +93,112 @@
             </div>  
         </div>
 
-        <!-- Contenido principal -->
-        <div class="flex-1 p-8">
-            <!-- Botón volver -->
-            <div class="mb-6">
-                <a href="{{ route('admin.especies.index') }}" 
-                   class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors">
-                    <i class="fas fa-arrow-left mr-2"></i>
-                    Volver
-                </a>
-            </div>
+<!-- Contenido principal -->
+<div class="flex-1 p-8">
+    <!-- Botón volver -->
+    <div class="mb-6">
+        <a href="{{ route('admin.especies.index') }}" 
+           class="inline-flex items-center px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-700 rounded-lg transition-colors">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Volver
+        </a>
+    </div>
 
-            <!-- Header -->
-            <div class="mb-8">
-                <h1 class="text-3xl font-bold text-gray-900">Agregar Especie</h1>
-            </div>
+    <!-- Header -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Agregar Especie</h1>
+    </div>
 
-            <!-- Formulario -->
-            <div class="bg-white rounded-lg shadow p-6 max-w-2xl">
-                <form action="{{ route('admin.especies.store') }}" method="POST">
-                    @csrf
+    <!-- Contenedor flexible para formulario y sección informativa -->
+    <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Formulario -->
+        <div class="bg-white rounded-lg shadow p-6 lg:w-2/3">
+            <form action="{{ route('admin.especies.store') }}" method="POST">
+                @csrf
+                
+                <!-- Nombre de la especie -->
+                <div class="mb-6">
+                    <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">
+                        Nombre de la especie <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none @error('nombre') border-red-500 @enderror"
+                           placeholder="Ej: Perro, Gato, Conejo" required>
+                    @error('nombre')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Descripción -->
+                <div class="mb-6">
+                    <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-2">
+                        Descripción
+                    </label>
+                    <textarea name="descripcion" id="descripcion" rows="4"
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none @error('descripcion') border-red-500 @enderror"
+                              placeholder="Describe las características generales de esta especie...">{{ old('descripcion') }}</textarea>
+                    @error('descripcion')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <!-- Botones -->
+                <div class="flex gap-4">
+                    <button type="submit"
+                            class="px-6 py-2 bg-pet-yellow hover:bg-pet-yellow-dark text-black font-semibold rounded-lg">
+                        <i class="fas fa-save mr-2"></i>
+                        Guardar
+                    </button>
+                    <a href="{{ route('admin.especies.index') }}"
+                       class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg">
+                        Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <!-- Sección informativa -->
+        <div class="lg:w-1/3">
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-6 rounded-lg h-full">
+                <h3 class="font-bold text-lg text-yellow-700 mb-4 flex items-center">
+                    <i class="fas fa-info-circle mr-2"></i> Guía rápida
+                </h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-medium text-gray-800 mb-2">¿Qué es una especie?</h4>
+                        <p class="text-sm text-gray-600">Una especie agrupa animales con características biológicas similares. Ejemplos comunes:</p>
+                    </div>
                     
-                    <!-- Nombre de la especie -->
-                    <div class="mb-6">
-                        <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">
-                            Nombre de la especie
-                        </label>
-                        <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none @error('nombre') border-red-500 @enderror"
-                               placeholder="Ej: Perro, Gato, Conejo">
-                        @error('nombre')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <span class="bg-yellow-100 text-yellow-700 rounded-full p-1 mr-3">
+                                <i class="fas fa-dog text-sm"></i>
+                            </span>
+                            <span class="text-sm">Perro (Canis lupus familiaris)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-yellow-100 text-yellow-700 rounded-full p-1 mr-3">
+                                <i class="fas fa-cat text-sm"></i>
+                            </span>
+                            <span class="text-sm">Gato (Felis catus)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-yellow-100 text-yellow-700 rounded-full p-1 mr-3">
+                                <i class="fas fa-dove text-sm"></i>
+                            </span>
+                            <span class="text-sm">Loro (Psittaciformes)</span>
+                        </li>
+                    </ul>
+                    
+                    <div class="p-3 bg-white rounded border border-yellow-200">
+                        <p class="text-xs font-medium text-yellow-700 mb-1">CONSEJO:</p>
+                        <p class="text-xs text-gray-700">Usa nombres comunes pero precisos. Evita nombres demasiado técnicos o genéricos.</p>
                     </div>
-
-                    <!-- Descripción -->
-                    <div class="mb-6">
-                        <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-2">
-                            Descripción
-                        </label>
-                        <textarea name="descripcion" id="descripcion" rows="4"
-                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:outline-none @error('descripcion') border-red-500 @enderror"
-                                  placeholder="Describe las características generales de esta especie...">{{ old('descripcion') }}</textarea>
-                        @error('descripcion')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <!-- Botones -->
-                    <div class="flex gap-4">
-                        <button type="submit"
-                                class="px-6 py-2 bg-pet-yellow hover:bg-pet-yellow-dark text-black font-semibold rounded-lg">
-                            <i class="fas fa-save mr-2"></i>
-                            Guardar
-                        </button>
-                        <a href="{{ route('admin.especies.index') }}"
-                           class="px-6 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg">
-                            Cancelar
-                        </a>
-                    </div>
-                </form>
+                    
+                    
+                </div>
             </div>
         </div>
     </div>
-</body>
-</html>
+</div>
