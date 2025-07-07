@@ -44,7 +44,7 @@
             <a href="{{ route('user.donations.index') }}" 
                class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-800 hover:bg-yellow-300 {{ request()->routeIs('user.donations.*') ? 'bg-yellow-300' : '' }}">
                 <i class="fas fa-dollar-sign"></i>
-                <span>Donaciones</span>
+                <span>Nueva donación</span>
             </a>
         </nav>
 
