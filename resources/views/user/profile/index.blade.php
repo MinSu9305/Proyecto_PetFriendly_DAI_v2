@@ -132,10 +132,12 @@
                                         <div class="flex items-center space-x-2">
                                             <span class="font-semibold">S/.
                                                 {{ number_format($donation->amount, 2) }}</span>
-                                            <a href="{{ route('user.donations.certificate', $donation) }}"
-                                                class="text-gray-600 hover:text-gray-900">
-                                                <i class="fas fa-download"></i>
+                                            <a href="{{ route('user.donations.certificate', $donation) }}" 
+                                                class="inline-flex items-center px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors">
+                                                <i class="fas fa-download mr-2"></i>
+                                                Descargar
                                             </a>
+                                            
                                         </div>
                                     </div>
                                 </div>

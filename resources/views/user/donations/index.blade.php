@@ -107,47 +107,6 @@
                 </div>
             </form>
         </div>
-
-        <!-- Historial de Donaciones -->
-        @if($donations->count() > 0)
-        <div class="bg-white rounded-2xl shadow-lg p-8">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">Historial de Donaciones</h2>
-            
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead>
-                        <tr class="border-b-2 border-gray-200">
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">#</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Fecha</th>
-                            <th class="px-4 py-3 text-left font-semibold text-gray-700">Monto</th>
-                            <th class="px-4 py-3 text-center font-semibold text-gray-700">Certificado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($donations as $donation)
-                            <tr class="border-b border-gray-100 hover:bg-gray-50">
-                                <td class="px-4 py-4">{{ $loop->iteration }}</td>
-                                <td class="px-4 py-4">{{ $donation->created_at->format('d/m/Y') }}</td>
-                                <td class="px-4 py-4 font-semibold text-green-600">S/. {{ number_format($donation->amount, 2) }}</td>
-                                <td class="px-4 py-4 text-center">
-                                    <a href="{{ route('user.donations.certificate', $donation) }}" 
-                                       class="inline-flex items-center px-3 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors">
-                                        <i class="fas fa-download mr-2"></i>
-                                        Descargar
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            
-            <!-- Paginación -->
-            <div class="mt-6">
-                {{ $donations->links() }}
-            </div>
-        </div>
-        @endif
     </div>
 </div>
 
