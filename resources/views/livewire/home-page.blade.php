@@ -13,7 +13,7 @@
                 <nav class="hidden md:flex space-x-8">
                     <a href="#" class="text-gray-700 hover:text-gray-900">Inicio</a>
                     <a href="#que-debo-saber" class="text-gray-700 hover:text-gray-900">¿Qué debo saber?</a>
-                    <a href="#mascotas" class="text-gray-700 hover:text-gray-900">Ver mascotas</a>
+                    <a href="#mascotas" class="text-gray-700 hover:text-gray-900">Nuestras mascotas adoptadas</a>
                 </nav>
 
                 <!-- Boton para acceder -->
@@ -65,7 +65,7 @@
 
                     <div class="bg-white border border-black rounded-2xl p-6">
                         <ol class="space-y-3 text-gray-700">
-                            <li>1. Elige tu compañero</li>
+                            <li>1. Elige tu mascota preferida.</li>
                             <li>2. Explora nuestras mascotas disponibles y selecciónalo.</li>
                             <li>3. Completa el formulario</li>
                             <li>4. Bienvenido a casa PetFriendly.</li>

@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
-// V a gestionar correctamente el perfil del usuario autenticado
 class ProfileController extends Controller
 {
     /**
@@ -51,7 +50,7 @@ class ProfileController extends Controller
         
         $user->name = $validated['name'];
         $user->email = $validated['email'];
-        $user->birth_date = $validated['birth_date'];
+        //$user->birth_date = $validated['birth_date'];
         $user->save();
         
         return redirect()->route('user.profile')->with('success', 'Perfil actualizado correctamente');
