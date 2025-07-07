@@ -161,11 +161,13 @@
                                       onsubmit="return confirm('¿Estás seguro de eliminar esta especie?')">
                                     @csrf
                                     @method('DELETE')
+                                    <!--
                                     <button type="submit" 
                                             class="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors" 
                                             title="Eliminar">
                                         <i class="fas fa-trash"></i>
                                     </button>
+                                -->
                                 </form>
                             @endif
                         </div>
