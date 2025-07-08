@@ -297,9 +297,7 @@
                                     <div class="flex justify-between items-start">
                                         <div>
                                             <h5 class="font-medium text-gray-900">${req.pet.name}</h5>
-                                            <span class="text-xs px-2 py-1 rounded-full ${getStatusColorClass(req.status)}">
-                                                ${req.status}
-                                            </span>
+                                            
                                         </div>
                                         <span class="text-xs text-gray-500">${new Date(req.created_at).toLocaleDateString()}</span>
                                     </div>
@@ -333,9 +331,6 @@
                                     <div class="flex justify-between items-center">
                                         <div>
                                             <h5 class="font-medium text-gray-900">Donación #${don.id}</h5>
-                                            <span class="text-xs px-2 py-1 rounded-full ${getStatusColorClass(don.status)}">
-                                                ${don.status}
-                                            </span>
                                         </div>
                                         <span class="text-lg font-bold text-yellow-600">S/ ${don.amount}</span>
                                     </div>
