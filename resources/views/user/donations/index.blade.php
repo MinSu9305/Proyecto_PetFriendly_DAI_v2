@@ -3,21 +3,20 @@
 @section('content')
 <div class="min-h-screen bg-gray-50 py-8">
     <div class="max-w-6xl mx-auto px-4">
-        
-        <!-- Formulario de Donación -->
+        <!-- Formulario de Donación - Diseño en dos columnas -->
         <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
             <div class="flex flex-col lg:flex-row">
-                <!-- Columna Izquierda - Información de la Donación -->
+                <!-- Columna Izquierda - Información Bancaria -->
                 <div class="w-full lg:w-1/2 bg-pet-yellow p-8 flex flex-col justify-center">
                     <div class="text-center mb-8">
                         <h1 class="text-4xl font-bold text-gray-900 mb-2">
                             Ayuda a más mascotas<br>
                             con tu <span class="text-white">DONACIÓN</span>
                         </h1>
-                        <p class="text-lg text-gray-700">Tu aporte hace la diferencia en la vida de nuestras mascotas</p>
+                        <p class="text-lg text-gray-700">Tu apoyo es vital para nuestro refugio</p>
                     </div>
 
-                    <!-- Datos Bancarios Destacados -->
+                    <!-- Tarjeta de Datos Bancarios -->
                     <div class="bg-white bg-opacity-90 rounded-xl p-6 shadow-sm">
                         <h3 class="text-xl font-bold text-gray-800 mb-4">Datos Bancarios:</h3>
                         <div class="space-y-3 text-gray-700">
@@ -41,12 +40,12 @@
                     </div>
                 </div>
 
-                <!-- Columna Derecha - Formulario -->
+                <!-- Columna Derecha - Formulario (Misma lógica que tu versión funcional) -->
                 <div class="w-full lg:w-1/2 p-8">
                     <form id="donation-form" action="{{ route('user.donations.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                         @csrf
 
-                        <!-- Monto -->
+                        <!-- Monto - Exactamente igual que tu versión funcional -->
                         <div>
                             <label for="amount" class="block text-lg font-semibold text-gray-700 mb-3">Monto:</label>
                             <div class="relative">
@@ -66,7 +65,7 @@
                                 </div>
                             </div>
                             
-                            <!-- Campo personalizado para "otro monto" -->
+                            <!-- Campo personalizado - Misma lógica -->
                             <div id="custom-amount" class="mt-3 hidden">
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -80,33 +79,23 @@
                             @error('amount') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
 
-                        <!-- Nombres y Apellidos (Solo lectura) -->
+                        <!-- Nombres y Apellidos - Mismo funcionamiento -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label class="block text-lg font-semibold text-gray-700 mb-3">Nombres</label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class="fas fa-user text-gray-400"></i>
-                                    </div>
-                                    <input type="text" value="{{ Auth::user()->first_name }}" 
-                                           readonly
-                                           class="pl-10 w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed">
-                                </div>
+                                <input type="text" name="first_name" value="{{ Auth::user()->first_name }}" 
+                                       readonly
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed">
                             </div>
                             <div>
                                 <label class="block text-lg font-semibold text-gray-700 mb-3">Apellidos</label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class="fas fa-user text-gray-400"></i>
-                                    </div>
-                                    <input type="text" value="{{ Auth::user()->last_name }}" 
-                                           readonly
-                                           class="pl-10 w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed">
-                                </div>
+                                <input type="text" name="last_name" value="{{ Auth::user()->last_name }}" 
+                                       readonly
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed">
                             </div>
                         </div>
 
-                        <!-- Subir Comprobante -->
+                        <!-- Subir Comprobante - Misma implementación -->
                         <div>
                             <label class="block text-lg font-semibold text-gray-700 mb-3">Subir comprobante</label>
                             <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-pet-yellow transition-colors">
@@ -114,6 +103,7 @@
                                 <label for="receipt" class="cursor-pointer">
                                     <div class="flex flex-col items-center">
                                         <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-3"></i>
+                                        <p class="text-gray-600">Haz clic para subir tu comprobante</p>
                                         <p class="text-sm text-gray-500 mt-1">PNG, JPG, PDF hasta 5MB</p>
                                     </div>
                                 </label>
@@ -122,15 +112,15 @@
                             @error('receipt') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
 
-                        <!-- Comentario -->
+                        <!-- Comentario - Misma estructura -->
                         <div>
                             <label for="message" class="block text-lg font-semibold text-gray-700 mb-3">Comentario:</label>
-                            <textarea id="message" name="message" rows="1" placeholder="Escribir un mensaje opcional..."
+                            <textarea id="message" name="message" rows="4" placeholder="Escribir un mensaje opcional..."
                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pet-yellow focus:border-pet-yellow resize-none"></textarea>
                             @error('message') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                         </div>
 
-                        <!-- Botón Donar -->
+                        <!-- Botón Donar - Misma función confirmDonation() -->
                         <div class="pt-4">
                             <button type="button" onclick="confirmDonation()" 
                                     class="w-full py-4 bg-pet-yellow hover:bg-pet-yellow-dark text-black text-xl font-bold rounded-lg shadow-md transition-colors">
@@ -144,6 +134,7 @@
     </div>
 </div>
 
+<!-- JavaScript IDÉNTICO al tuyo que ya funcionaba -->
 <script>
     // Manejar selección de monto personalizado
     document.getElementById('amount').addEventListener('change', function() {
@@ -171,7 +162,7 @@
         }
     }
 
-    // Confirmar donación
+    // Confirmar donación - Función exactamente igual a la tuya
     function confirmDonation() {
         const form = document.getElementById('donation-form');
         const amountSelect = document.getElementById('amount');
