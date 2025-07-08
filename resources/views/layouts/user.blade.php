@@ -30,10 +30,10 @@
         </div>
 
         <!-- Navegación -->
-        <nav class="flex-1 p-4 space-y-2">
+        <nav class="flex-1 p-4 space-y-2 ">
             <a href="{{ route('user.profile') }}" 
-               class="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-800 hover:bg-yellow-300 {{ request()->routeIs('user.profile') ? 'bg-yellow-300' : '' }}">
-                <i class="fas fa-user"></i>
+               class=" flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-800 hover:bg-yellow-300 {{ request()->routeIs('user.profile') ? 'bg-yellow-300' : '' }}">
+                <i class="fas fa-user "></i>
                 <span>Perfil</span>
             </a>
             <a href="{{ route('user.pets.index') }}" 
@@ -49,15 +49,17 @@
         </nav>
 
         <!-- Botón de salida -->
-        <div class="p-4">
-            <form method="POST" action="{{ route('logout') }}">
+        <div class="absolute bottom-6 left-0 right-0 px-4">
+            <form method="POST" action="{{ route('logout') }}" id="logout-form">
                 @csrf
-                <button type="submit" class="flex items-center space-x-3 px-4 py-3 text-gray-800 hover:bg-yellow-300 rounded-lg w-full">
-                    <i class="fas fa-sign-out-alt"></i>
+                <button type="submit" 
+                    onclick="this.disabled=true; this.form.submit();" 
+                    class="flex items-center space-x-3 px-4 py-3 bg-black text-white rounded-lg transition-colors duration-200 font-medium w-full">
+                    <i class="fas fa-sign-out-alt w-5 text-center text-white"></i>
                     <span>Salir</span>
                 </button>
             </form>
-        </div>
+        </div> 
     </div>
 
         <!-- Contenido -->

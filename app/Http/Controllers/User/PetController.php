@@ -1,94 +1,101 @@
 <?php
+
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pet;
 use App\Models\Especie;
 use App\Models\AdoptionRequest;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-// Este controlador permite a los usuarios ver mascotas disponibles para adopción, solicitar adopciones y gestionar sus solicitudes.
+
 class PetController extends Controller
 {
-    /**
-     * Muestra el listado de mascotas disponibles para adopción
-     */
     public function index(Request $request)
     {
-        $type = $request->get('type');
+        // *** OBTENER LAS ESPECIES PARA EL FILTRO ***
+        $especies = Especie::orderBy('nombre')->get();
+        
+        // *** CAMBIAR DE 'type' A 'especie_id' ***
+        $especieId = $request->get('especie_id');
         $gender = $request->get('gender');
-        
-        $pets = Pet::where('status', 'available')
-            ->when($type, function ($query, $type) {
-                return $query->where('type', $type);
-            })
-            ->when($gender, function ($query, $gender) {
-                return $query->where('gender', $gender);
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate(5);
-        
-        return view('user.pets.index', compact('pets', 'type', 'gender'));
+
+        // Construir la consulta
+        $query = Pet::with(['especie', 'raza'])
+            ->where('status', 'available');
+
+        // *** FILTRAR POR ESPECIE_ID EN LUGAR DE TYPE ***
+        if ($especieId) {
+            $query->where('especie_id', $especieId);
+        }
+
+        if ($gender) {
+            $query->where('gender', $gender);
+        }
+
+        $pets = $query->orderBy('created_at', 'desc')->paginate(12);
+
+        // *** PASAR LAS ESPECIES A LA VISTA ***
+        return view('user.pets.index', compact('pets', 'especies', 'especieId', 'gender'));
     }
 
-    /**
-     * Muestra los detalles de una mascota específica
-     */
     public function show(Pet $pet)
     {
-        return view('user.pets.show', compact('pet'));
+        // Cargar las relaciones necesarias
+        $pet->load(['especie', 'raza']);
+        
+        // *** AGREGAR LA VARIABLE USER ***
+        $user = Auth::user();
+        
+        return view('user.pets.show', compact('pet', 'user'));
     }
 
-    /**
-     * Muestra el formulario para solicitar la adopción
-     */
     public function adoptionForm(Pet $pet)
     {
+        // Verificar que la mascota esté disponible
+        if ($pet->status !== 'available') {
+            return redirect()->route('user.pets.index')
+                ->with('error', 'Esta mascota ya no está disponible para adopción.');
+        }
+
+        // *** AGREGAR LA VARIABLE USER TAMBIÉN AQUÍ ***
         $user = Auth::user();
+        
         return view('user.pets.adoption-form', compact('pet', 'user'));
     }
 
-    /**
-     * Guarda una nueva solicitud de adopción.
-     */
     public function submitAdoption(Request $request, Pet $pet)
     {
-        $validated = $request->validate([
-            'dni' => 'required|string|max:20',
-            'phone' => 'required|string|max:20',
-            'message' => 'required|string|min:10',
-        ]);
-        
-        // Evita solicitudes duplicadas pendientes para la misma mascota por el mismo usuario:
+        // Validar que la mascota esté disponible
+        if ($pet->status !== 'available') {
+            return redirect()->route('user.pets.index')
+                ->with('error', 'Esta mascota ya no está disponible para adopción.');
+        }
+
+        // Verificar que el usuario no tenga una solicitud pendiente para esta mascota
         $existingRequest = AdoptionRequest::where('user_id', Auth::id())
             ->where('pet_id', $pet->id)
-            ->where('status', 'pending')
+            ->whereIn('status', ['pending', 'approved'])
             ->first();
-            
+
         if ($existingRequest) {
-            return redirect()->back()->with('error', 'Ya tienes una solicitud pendiente para esta mascota.');
+            return redirect()->route('user.pets.show', $pet)
+                ->with('error', 'Ya tienes una solicitud de adopción para esta mascota.');
         }
-        
-        // Crea la solicitud
+
+        $request->validate([
+            'message' => 'required|string|max:1000',
+        ]);
+
+        // Crear la solicitud de adopción
         AdoptionRequest::create([
             'user_id' => Auth::id(),
             'pet_id' => $pet->id,
-            'message' => $validated['message'],
+            'message' => $request->message,
             'status' => 'pending',
-            'admin_notes' => null,
         ]);
-        
-        // Actualiza el usuario con los datos de adopción
-        $user = User::find(Auth::id());
-        $user->dni = $validated['dni'];
-        $user->phone = $validated['phone'];
-        $user->save();
-        
-        // Cambia el estado de la mascota a pending
-        $pet->status = 'pending';
-        $pet->save();
-        
-        return redirect()->route('user.pets.index')->with('success', 'Tu solicitud de adopción ha sido enviada y será evaluada por un administrador.');
+
+        return redirect()->route('user.pets.show', $pet)
+            ->with('success', 'Tu solicitud de adopción ha sido enviada correctamente.');
     }
 }
