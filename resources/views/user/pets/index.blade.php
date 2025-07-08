@@ -98,8 +98,87 @@
     </div>
     
     <!-- Paginación -->
-    <div class="mt-8 flex justify-center">
-        {{ $pets->appends(request()->query())->links() }}
+    @if($pets->hasPages())
+    @php
+        // Conservar todos los parámetros GET
+        $queryParams = request()->query();
+        
+        // Configuración del rango de páginas a mostrar
+        $currentPage = $pets->currentPage();
+        $lastPage = $pets->lastPage();
+        $start = max(1, $currentPage - 3);
+        $end = min($lastPage, $start + 6);
+        $start = max(1, $end - 6);
+    @endphp
+
+    <div class="mt-6 flex justify-center items-center">
+        <div class="flex items-center gap-2 bg-white rounded-lg shadow-sm p-2">
+            {{-- Previous Page Link --}}
+            @if ($pets->onFirstPage())
+                <span class="px-3 py-1 rounded-md text-gray-400 cursor-not-allowed">
+                    <i class="fas fa-chevron-left"></i>
+                </span>
+            @else
+                @php $queryParams['page'] = $currentPage - 1; @endphp
+                <a href="{{ url()->current() }}?{{ http_build_query($queryParams) }}" 
+                   class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+            @endif
+
+            {{-- Mostrar primera página y elipsis --}}
+            @if($start > 1)
+                @php $queryParams['page'] = 1; @endphp
+                <a href="{{ url()->current() }}?{{ http_build_query($queryParams) }}" 
+                   class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
+                    1
+                </a>
+                @if($start > 2)
+                    <span class="px-3 py-1">...</span>
+                @endif
+            @endif
+            
+            {{-- Rango de páginas --}}
+            @foreach (range($start, $end) as $page)
+                @php $queryParams['page'] = $page; @endphp
+                @if ($page == $currentPage)
+                    <span class="px-3 py-1 rounded-md bg-pet-yellow text-black font-medium">
+                        {{ $page }}
+                    </span>
+                @else
+                    <a href="{{ url()->current() }}?{{ http_build_query($queryParams) }}" 
+                       class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
+                        {{ $page }}
+                    </a>
+                @endif
+            @endforeach
+            
+            {{-- Mostrar última página y elipsis --}}
+            @if($end < $lastPage)
+                @if($end < $lastPage - 1)
+                    <span class="px-3 py-1">...</span>
+                @endif
+                @php $queryParams['page'] = $lastPage; @endphp
+                <a href="{{ url()->current() }}?{{ http_build_query($queryParams) }}" 
+                   class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
+                    {{ $lastPage }}
+                </a>
+            @endif
+
+            {{-- Next Page Link --}}
+            @if ($pets->hasMorePages())
+                @php $queryParams['page'] = $currentPage + 1; @endphp
+                <a href="{{ url()->current() }}?{{ http_build_query($queryParams) }}" 
+                   class="px-3 py-1 rounded-md bg-gray-100 text-gray-700 hover:bg-pet-yellow hover:text-black transition-colors">
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            @else
+                <span class="px-3 py-1 rounded-md text-gray-400 cursor-not-allowed">
+                    <i class="fas fa-chevron-right"></i>
+                </span>
+            @endif
+        </div>
     </div>
+@endif
 </div>
 @endsection

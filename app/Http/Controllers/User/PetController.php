@@ -33,7 +33,7 @@ class PetController extends Controller
             $query->where('gender', $gender);
         }
 
-        $pets = $query->orderBy('created_at', 'desc')->paginate(12);
+        $pets = $query->orderBy('created_at', 'desc')->paginate(8);
 
         // *** PASAR LAS ESPECIES A LA VISTA ***
         return view('user.pets.index', compact('pets', 'especies', 'especieId', 'gender'));

@@ -15,12 +15,38 @@
         .hover\:bg-pet-yellow:hover { background-color: #F59E0B; }
         .text-pet-yellow { color: #F59E0B; }
         .bg-pet-yellow-dark { background-color: #F59E0B; }
+        
+        /* Nuevos estilos añadidos */
+        .sidebar-fixed {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 16rem; /* Equivalente a w-64 */
+            overflow-y: auto; /* Scroll interno si es necesario */
+        }
+        
+        .content-with-sidebar {
+            margin-left: 16rem; /* Igual que el ancho del sidebar */
+            width: calc(100% - 16rem);
+        }
+        
+        /* Asegurar que el footer del sidebar quede abajo */
+        .sidebar-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .sidebar-nav {
+            flex: 1;
+        }
     </style>
 </head>
 <body class="font-sans antialiased">
     <div class="flex min-h-screen">
     <!-- Sidebar -->
-    <div class="w-64 bg-amber-100 relative flex flex-col">
+    <div class="sidebar-fixed bg-amber-100 flex flex-col sidebar-container">
         <!-- Logo -->
         <div class="p-6 bg-pet-yellow border-b border-gray-200">
             <div class="flex items-center space-x-3">
@@ -30,7 +56,7 @@
         </div>
 
         <!-- Navegación -->
-        <nav class="flex-1 p-4 space-y-2 ">
+        <nav class="sidebar-nav p-4 space-y-2">
             <a href="{{ route('user.profile') }}" 
                class=" flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-800 hover:bg-yellow-300 {{ request()->routeIs('user.profile') ? 'bg-yellow-300' : '' }}">
                 <i class="fas fa-user "></i>
@@ -63,7 +89,7 @@
     </div>
 
         <!-- Contenido -->
-        <div class="flex-1">
+        <div class="content-with-sidebar flex-1 min-h-screen">
             @yield('content')
         </div>
     </div>

@@ -14,32 +14,41 @@ class PetController extends Controller
     /**
      * Lista las mascotas con opción de búsqueda
      */
-    public function index(Request $request)
-    {
-        $search = $request->get('search');
-        $translated = [
-            'perro' => 'dog',
-            'gato' => 'cat',
-            'otro' => 'other',
-        ];
+public function index(Request $request)
+{
+    $search = $request->get('search');
+    
+    // Traducción ampliada con más términos comunes
+    $translated = [
+        'perro' => 'dog', 'canino' => 'dog', 'can' => 'dog',
+        'gato' => 'cat', 'felino' => 'cat', 'gat' => 'cat',
+        'conejo' => 'rabbit', 'rabbit' => 'rabbit',
+        'ave' => 'bird', 'pájaro' => 'bird',
+        'otro' => 'other', 'otros' => 'other'
+    ];
 
-        $searchTranslated = strtolower($search);
-        $typeSearch = $translated[$searchTranslated] ?? $search;
+    $normalizedSearch = trim(strtolower($search));
+    $typeSearch = $translated[$normalizedSearch] ?? $search;
 
-        $pets = Pet::with('raza') // Cargar la relación
-            ->when($search, function ($query) use ($typeSearch) {
-                $query->where('name', 'like', "%{$typeSearch}%")
-                    ->orWhere('type', 'like', "%{$typeSearch}%")
-                    ->orWhereHas('raza', function($q) use ($typeSearch) {
-                        $q->where('nombre', 'like', "%{$typeSearch}%");
-                    });
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate(5);
+    $pets = Pet::with(['raza', 'especie'])
+        ->when($search, function ($query) use ($typeSearch, $normalizedSearch, $search) {
+            $query->where(function($q) use ($typeSearch, $normalizedSearch, $search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('type', 'like', "%{$typeSearch}%")
+                  ->orWhere('type', 'like', "%{$normalizedSearch}%")
+                  ->orWhereHas('raza', function($q) use ($search) {
+                      $q->where('nombre', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('especie', function($q) use ($search) {
+                      $q->where('nombre', 'like', "%{$search}%");
+                  });
+            });
+        })
+        ->orderBy('created_at', 'desc')
+        ->paginate(5);
 
-        return view('admin.pet.index', compact('pets', 'search'));
-    }
-
+    return view('admin.pet.index', compact('pets', 'search'));
+}
     /**
      * Muestra el formulario para registrar una nueva mascota.
      */
